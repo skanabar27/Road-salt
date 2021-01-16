@@ -71,7 +71,16 @@ ggplot(synoptic_conductivity_mean) +
   theme(plot.title = element_text(hjust = 0.5))
 
 #with sd
-
+ggplot(synoptic_conductivity_mean) +
+  geom_line(aes(x = Year, y = Mean_Conductivity)) +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Mean Conductivity (µS/cm)\n",
+       title = "Mean Conductivity in lakes in the HRM over time") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  geom_errorbar(mapping = aes(x = Year,
+                              ymin = Mean_Conductivity-SD_Conductivity,
+                              ymax = Mean_Conductivity+SD_Conductivity), width = 0.2)
 
 
 
@@ -130,12 +139,21 @@ ggplot(synoptic_Cl_mean) +
   geom_line(aes(x = Year, y = Mean_Cl)) +
   theme_classic() +
   labs(x = "\n Year",
-       y = "Chloride (mg/L)\n",
+       y = "Mean Chloride (mg/L)\n",
        title = "Mean Chloride in lakes in the HRM over time") +
   theme(plot.title = element_text(hjust = 0.5))
 
 #with sd
-
+ggplot(synoptic_Cl_mean) +
+  geom_line(aes(x = Year, y = Mean_Cl)) +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Mean Chloride (mg/L)\n",
+       title = "Mean Chloride in lakes in the HRM over time") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  geom_errorbar(mapping = aes(x = Year,
+                              ymin = Mean_Cl-SD_Cl,
+                              ymax = Mean_Cl+SD_Cl), width = 0.2)
 
 
 
@@ -195,11 +213,21 @@ ggplot(synoptic_Na_mean) +
   geom_line(aes(x = Year, y = Mean_Na)) +
   theme_classic() +
   labs(x = "\n Year",
-       y = "Sodium (mg/L)\n",
+       y = "Mean Sodium (mg/L)\n",
        title = "Mean Sodium in lakes in the HRM over time") +
   theme(plot.title = element_text(hjust = 0.5))
 
-
+#with sd
+ggplot(synoptic_Na_mean) +
+  geom_line(aes(x = Year, y = Mean_Na)) +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Mean Sodium (mg/L)\n",
+       title = "Mean Sodium in lakes in the HRM over time") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  geom_errorbar(mapping = aes(x = Year,
+                              ymin = Mean_Na-SD_Na,
+                              ymax = Mean_Na+SD_Na), width = 0.2)
 
 
 
