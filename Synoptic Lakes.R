@@ -15,7 +15,7 @@ synoptic <- read.csv("Synoptic salt.csv")
 # plot change in conductivity over time
 synoptic_conductivity <- synoptic %>%
   select("Name", "Year", "Conductivity")
-
+  
 # converting factors to class numeric
 synoptic_conductivity$Year <- as.numeric(synoptic_conductivity$Year)
 synoptic_conductivity$Conductivity <- as.numeric(synoptic_conductivity$Conductivity)
@@ -29,18 +29,6 @@ synoptic_conductivity_1991 <-  synoptic_conductivity %>%
 
 synoptic_conductivity_2000 <-  synoptic_conductivity %>%
   filter(Year == "2000")
-
-# average conductivity per year
-synoptic_conductivity_mean <- synoptic_conductivity %>%
-  group_by(Year) %>%
-  na.omit() %>%
-  summarise_at(vars(Conductivity),
-               list(Year = mean),
-               list(Year = sd))
-    
-    #Mean_Conductivity = mean(Conductivity), SD_Conductivity = sd(Conductivity))
-
-
 
 #Histogram of conductivity each round of sampling. Normal distribution?
 hist(synoptic_conductivity_1980$Conductivity,
@@ -60,16 +48,23 @@ hist(synoptic_conductivity_2000$Conductivity,
 
 # all values change over time
 ggplot(synoptic_conductivity) +
-  geom_line(aes(x = Year, y = )) +
-  labs(x = "/nYear",
-       y = "Conductivity")
+  geom_point(aes(x = Year, y = Conductivity)) +
+  theme_classic() +
+  labs(x = "\nYear",
+       y = "Conductivity\n",
+       title = "Conductivity in lakes in the HRM ") #+
+  
+  
 
 
+# average conductivity per year
+synoptic_conductivity_mean <- synoptic_conductivity %>%
+  dplyr::group_by(Year) %>%
+  na.omit() %>%
+  dplyr::summarise(Mean_Conductivity = mean(Conductivity), SD_Conductivity = sd(Conductivity))
 
 # average change over time
-synoptic_conductivity_mean <- select(synoptic_conductivity$Mean)
-
-ggplot(lake_conductivity) +
+ggplot(synoptic_conductivity_mean) +
   geom_line()
 
 
