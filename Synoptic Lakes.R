@@ -60,6 +60,13 @@ synoptic_conductivity_mean <- synoptic_conductivity %>%
   na.omit() %>%
   dplyr::summarise(Mean_Conductivity = mean(Conductivity), SD_Conductivity = sd(Conductivity))
 
+# count per year
+synoptic_conductivity_count <- synoptic_conductivity %>%
+  dplyr::group_by(Year) %>%
+  na.omit() %>%
+  dplyr::summarise(count = length(Conductivity))
+# 1980: 49, 1991: 49, 2000: 50
+
 # average change over time
 #without sd
 ggplot(synoptic_conductivity_mean) +
@@ -132,6 +139,13 @@ synoptic_Cl_mean <- synoptic_Cl %>%
   dplyr::group_by(Year) %>%
   na.omit() %>%
   dplyr::summarise(Mean_Cl = mean(Cl), SD_Cl = sd(Cl))
+
+# count per year
+synoptic_Cl_count <- synoptic_Cl %>%
+  dplyr::group_by(Year) %>%
+  na.omit() %>%
+  dplyr::summarise(count = length(Cl))
+# 1980: 49, 1991: 48, 2000: 51, 2011: 51
 
 # average change over time
 #without sd
@@ -206,6 +220,13 @@ synoptic_Na_mean <- synoptic_Na %>%
   dplyr::group_by(Year) %>%
   na.omit() %>%
   dplyr::summarise(Mean_Na = mean(Na), SD_Na = sd(Na))
+
+# count per year
+synoptic_Na_count <- synoptic_Na %>%
+  dplyr::group_by(Year) %>%
+  na.omit() %>%
+  dplyr::summarise(count = length(Na))
+# 1980: 49, 1991: 48, 2000: 51, 2011: 51
 
 # average change over time
 #without sd
