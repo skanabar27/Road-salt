@@ -33,17 +33,18 @@ synoptic_conductivity_2000 <-  synoptic_conductivity %>%
 #Histogram of conductivity each round of sampling. Normal distribution?
 hist(synoptic_conductivity_1980$Conductivity,
      xlab = "Conductivity (µS/cm)",
-     main = "Histogram of Lake Conductivity in 1980",
-     breaks = 15)
+     main = "Histogram of lake Conductivity in 1980",
+     breaks = 15,
+     xlim = )
 
 hist(synoptic_conductivity_1991$Conductivity,
      xlab = "Conductivity (µS/cm)",
-     main = "Histogram of Lake Conductivity in 1991",
+     main = "Histogram of lake Conductivity in 1991",
      breaks = 15)
 
 hist(synoptic_conductivity_2000$Conductivity,
      xlab = "Conductivity (µS/cm)",
-     main = "Histogram of Lake Conductivity in 2000",
+     main = "Histogram of lake Conductivity in 2000",
      breaks = 15)
 
 # all values change over time
@@ -110,29 +111,29 @@ synoptic_Cl_1991 <-  synoptic_Cl %>%
 synoptic_Cl_2000 <-  synoptic_Cl %>%
   filter(Year == "2000")
 
+synoptic_Cl_2011 <-  synoptic_Cl %>%
+  filter(Year == "2011")
+
 #Histogram of conductivity each round of sampling. Normal distribution?
 hist(synoptic_Cl_1980$Cl,
      xlab = "Chloride (mg/L)",
-     main = "Histogram of Lake Chloride in 1980",
+     main = "Histogram of lake chloride concentration in 1980",
      breaks = 15)
 
 hist(synoptic_Cl_1991$Cl,
      xlab = "Chloride (mg/L)",
-     main = "Histogram of lake Chloride in 1991",
+     main = "Histogram of lake chloride concentration in 1991",
      breaks = 15)
 
 hist(synoptic_Cl_2000$Cl,
      xlab = "Chloride (mg/L)",
-     main = "Histogram of lake Chloride in 2000",
+     main = "Histogram of lake chloride concentration in 2000",
      breaks = 15)
 
-# all values change over time
-ggplot(synoptic_Cl) +
-  geom_point(aes(x = Year, y = Cl)) +
-  theme_classic() +
-  labs(x = "\nYear",
-       y = "Chloride (mg/L)\n",
-       title = "Chloride levels in lakes in the HRM ") #+
+hist(synoptic_Cl_2011$Cl,
+     xlab = "Chloride (mg/L)",
+     main = "Histogram of lake chloride concentration in 2011",
+     breaks = 15)
 
 # average conductivity per year
 synoptic_Cl_mean <- synoptic_Cl %>%
@@ -154,7 +155,7 @@ ggplot(synoptic_Cl_mean) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Chloride (mg/L)\n",
-       title = "Mean Chloride in lakes in the HRM over time") +
+       title = "Mean Chloride Concentration in lakes in the HRM over time") +
   theme(plot.title = element_text(hjust = 0.5))
 
 #with sd
@@ -163,7 +164,7 @@ ggplot(synoptic_Cl_mean) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Chloride (mg/L)\n",
-       title = "Mean Chloride in lakes in the HRM over time") +
+       title = "Mean Chloride Concentration in lakes in the HRM over time") +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_errorbar(mapping = aes(x = Year,
                               ymin = Mean_Cl-SD_Cl,
@@ -191,29 +192,29 @@ synoptic_Na_1991 <-  synoptic_Na %>%
 synoptic_Na_2000 <-  synoptic_Na %>%
   filter(Year == "2000")
 
+synoptic_Na_2011 <-  synoptic_Na %>%
+  filter(Year == "2011")
+
 #Histogram of conductivity each round of sampling. Normal distribution?
 hist(synoptic_Na_1980$Na,
      xlab = "Sodium (mg/L)",
-     main = "Histogram of lake Sodium in 1980",
+     main = "Histogram of lake sodium concentration in 1980",
      breaks = 15)
 
 hist(synoptic_Na_1991$Na,
      xlab = "Sodium (mg/L)",
-     main = "Histogram of lake Sodium in 1991",
+     main = "Histogram of lake sodium concentration in 1991",
      breaks = 15)
 
 hist(synoptic_Na_2000$Na,
      xlab = "Sodium (mg/L)",
-     main = "Histogram of lake Sodium in 2000",
+     main = "Histogram of lake sodium concentration in 2000",
      breaks = 15)
 
-# all values change over time
-ggplot(synoptic_Na) +
-  geom_point(aes(x = Year, y = Na)) +
-  theme_classic() +
-  labs(x = "\nYear",
-       y = "Sodium (mg/L)\n",
-       title = "Sodium levels in lakes in the HRM ") #+
+hist(synoptic_Na_2011$Na,
+     xlab = "Sodium (mg/L)",
+     main = "Histogram of lake sodium concentrationin 2011",
+     breaks = 15)
 
 # average conductivity per year
 synoptic_Na_mean <- synoptic_Na %>%
@@ -234,8 +235,8 @@ ggplot(synoptic_Na_mean) +
   geom_line(aes(x = Year, y = Mean_Na)) +
   theme_classic() +
   labs(x = "\n Year",
-       y = "Mean Sodium (mg/L)\n",
-       title = "Mean Sodium in lakes in the HRM over time") +
+       y = "Mean Sodium Concentration (mg/L)\n",
+       title = "Mean Sodium Concentration in lakes in the HRM over time") +
   theme(plot.title = element_text(hjust = 0.5))
 
 #with sd
@@ -243,12 +244,27 @@ ggplot(synoptic_Na_mean) +
   geom_line(aes(x = Year, y = Mean_Na)) +
   theme_classic() +
   labs(x = "\n Year",
-       y = "Mean Sodium (mg/L)\n",
-       title = "Mean Sodium in lakes in the HRM over time") +
+       y = "Mean Sodium Concentration (mg/L)\n",
+       title = "Mean Sodium Concentration in lakes in the HRM over time") +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_errorbar(mapping = aes(x = Year,
                               ymin = Mean_Na-SD_Na,
                               ymax = Mean_Na+SD_Na), width = 0.2)
+
+
+
+
+
+# combined Cl and Na
+ggplot(NULL) +
+  geom_line(data = synoptic_Na_mean, aes(x = Year, y = Mean_Na)) +
+  geom_line(data = synoptic_Cl_mean, aes(x = Year, y = Mean_Cl)) +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Mean Ion Concentration (mg/L)\n",
+       title = "Mean Sodium and Chloride Concentration in lakes in the HRM over time \n") +
+  theme(plot.title = element_text(hjust = 0.5, size = 12))
+  
 
 
 
