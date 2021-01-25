@@ -256,14 +256,31 @@ ggplot(synoptic_Na_mean) +
 
 
 # combined Cl and Na
-ggplot(NULL) +
-  geom_line(data = synoptic_Na_mean, aes(x = Year, y = Mean_Na)) +
-  geom_line(data = synoptic_Cl_mean, aes(x = Year, y = Mean_Cl)) +
+synoptic_Na_Cl <- synoptic %>%
+  select("Name", "Year", "Cl", "Na")
+
+synoptic_Na_Cl$Year <- as.numeric(synoptic_Na_Cl$Year)
+synoptic_Na_Cl$Cl <- as.numeric(synoptic_Na_Cl$Cl)
+synoptic_Na_Cl$Na <- as.numeric(synoptic_Na_Cl$Na)
+
+synoptic_Na_Cl_mean <- synoptic_Na_Cl %>%
+  dplyr::group_by(Year) %>%
+  na.omit() %>%
+  dplyr::summarise(Mean_Na = mean(Na), SD_Na = sd(Na), Mean_Cl = mean(Cl), SD_Cl = sd(Cl))
+
+ggplot(synoptic_Na_Cl_mean) +
+  geom_line(aes(x = Year, y = Mean_Na)) +
+  geom_line(aes(x = Year, y = Mean_Cl)) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Ion Concentration (mg/L)\n",
        title = "Mean Sodium and Chloride Concentration in lakes in the HRM over time \n") +
-  theme(plot.title = element_text(hjust = 0.5, size = 12))
+  theme(plot.title = element_text(hjust = 0.5, size = 12)) +
+  scale_color_discrete(name = "Ions", labels = c("Na", "Cl")) #+
+  geom_text(show.legend = TRUE) #+
+  theme(legend.text = element_text(size = 12, face = "italic"),
+        legend.title = element_text(size = 12, face = "bold"))
+  
   
 
 
