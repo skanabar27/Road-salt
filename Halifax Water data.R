@@ -20,19 +20,24 @@ LL_cond <- LLDL01 %>%
 LLG_Sites <- read.csv("LLG_Sites.csv")
 
 # histograms
-hist(LLG_Sites$Cond,
-     xlab = "Conductivity (µS/cm)",
-     main = "Histogram of Lemont Lake Conductivity",
-     breaks = 20)
+# by year
+ggplot(data = LLG_Sites, aes(x = Cond, fill = Year)) +
+  geom_histogram(binwidth = 50) + 
+  facet_wrap(~ Year) +
+  labs(x = "Conductivity (µS/cm)",
+       y = "Frequency",
+       title = "Histogram of Lemont Lake Conductivity by Year") + 
+  theme_bw()
 
-hist_month <- ggplot(LLG_Sites, aes(x = Month)) + geom_histogram(stat = "count")
-hist_month + facet_grid(Month ~ Cond)
-
-hist(LLG_Sites$Cond,
-     xlab = "Conductivity (µS/cm)",
-     main = "Histogram of Lemont Lake Conductivity",
-     breaks = 20) #+
-  facet_wrap(LLG_Sites$Month)
+# by month
+ggplot(data = LLG_Sites, aes(x = Cond, fill = Month)) +
+  geom_histogram(binwidth = 50) + 
+  facet_wrap(~ Month) +
+  labs(x = "Conductivity (µS/cm)",
+       y = "Frequency",
+       title = "Histogram of Lemont Lake Conductivity by Month") + 
+  theme_bw()
+                                                                      # change order of months!!
 
 
 # conductivity by year
