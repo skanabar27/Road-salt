@@ -6,12 +6,19 @@ library(plotly)
 library(plyr)
 library(stars)
 library(tidyr)
+library(tidyverse)
+library(ggpubr)
+library(rstatix)
+library(datarium)
 
 LLDL01 <- read.csv("LLDL-01.csv")
 
 # conductivity
 LL_cond <- LLDL01 %>%
   filter("")
+
+# Conductivty (µS/cm), Cl (mg/L) and Na (mg/L)
+# only at depth of 0.5
 ### figure out date formatting first
                                                 #create blocks by season?
 

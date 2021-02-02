@@ -9,6 +9,7 @@ library(tidyr)
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
+library(datarium)
 
 # add condensed dataset with salt and conductivity data
 # sf library is corrupt?
@@ -353,6 +354,47 @@ synoptic_conductivity_1991 %>% shapiro_test(Conductivity)
 synoptic_conductivity_2000 %>% shapiro_test(Conductivity)
 # p=0.00325, cannot assume normality
 
+# median and IQR (for Wilcoxon test)
+synoptic_conductivity %>% get_summary_stats(Conductivity, type = "median_iqr")
+
+bxp_cond <- ggboxplot(
+  synoptic_conductivity$Conductivity, width = 0.5, add = c("mean", "jitter"), 
+  ylab = "Conductivity (µS/cm)", xlab = FALSE
+)
+bxp_cond
+
+gghistogram(synoptic_conductivity, x = "Conductivity", y = "..density..", 
+            fill = "steelblue",bins = 30, add_density = TRUE)
+# distribution is not symmetrical, so will try sign test
+
+synoptic_conductivity_1980 %>% get_summary_stats(Conductivity, type = "median_iqr")
+
+bxp_cond_1980 <- ggboxplot(
+  synoptic_conductivity_1980$Conductivity, width = 0.5, add = c("mean", "jitter"), 
+  ylab = "Conductivity (µS/cm)", xlab = FALSE
+)
+bxp_cond_1980
+
+gghistogram(synoptic_conductivity_1980, x = "Conductivity", y = "..density..", 
+            fill = "steelblue",bins = 30, add_density = TRUE)
+# distribution is not symmetrical, so will try sign test
+
+# Sign Test
+synoptic_conductivity %>%
+  group_by(Year) %>%
+  get_summary_stats(Conductivity, type = "median_iqr")
+
+bxp_c_sign <- ggpaired(synoptic_conductivity, x = "Year", y = "Conductivity", 
+                order = c("1980", "1991", "2000"),
+                ylab = "Conductivity (µS/cm)", xlab = "Year")
+bxp_c_sign
+
+stat.test <- synoptic_conductivity  %>%
+  sign_test(Conductivity ~ Year) %>%
+  add_significance()
+stat.test
+# there is a significant difference (p<0.001) between conductivity in 1980, 1991, and 2000
+
 
 
 # Cl over time
@@ -385,6 +427,37 @@ synoptic_Cl_2000 %>% shapiro_test(Cl)
 synoptic_Cl_2011 %>% shapiro_test(Cl)
 # p<0.001, cannot assume normality
 
+# median and IQR (for Wilcoxon test)
+synoptic_Cl %>% get_summary_stats(Cl, type = "median_iqr")
+
+bxp_Cl <- ggboxplot(
+  synoptic_Cl$Cl, width = 0.5, add = c("mean", "jitter"), 
+  ylab = "Cl (mg/L)", xlab = FALSE
+)
+bxp_Cl
+
+gghistogram(synoptic_Cl, x = "Cl", y = "..density..", 
+            fill = "steelblue",bins = 30, add_density = TRUE)
+# distribution is not symmetrical, so will try sign test
+
+# Sign Test
+synoptic_Cl %>%
+  group_by(Year) %>%
+  get_summary_stats(Cl, type = "median_iqr")
+
+bxp_cl_sign <- ggpaired(synoptic_Cl, x = "Year", y = "Cl", 
+                       order = c("1980", "1991", "2000", "2011"),
+                       ylab = "Cl (mg/L))", xlab = "Year")
+bxp_cl_sign
+
+stat.test1 <- synoptic_Cl  %>%
+  sign_test(Cl ~ Year) %>%
+  add_significance()
+stat.test1
+# there is a significant difference (p<0.001) between Cl in 1980, 1991, 2000 and 2011
+# the smallest difference is between 1991 and 2000 (p=0.013)
+
+
 
 # Na over time
 synoptic_Na %>% identify_outliers(Na)
@@ -415,6 +488,36 @@ synoptic_Na_2000 %>% shapiro_test(Na)
 
 synoptic_Na_2011 %>% shapiro_test(Na)
 # p<0.001, cannot assume normality
+
+# median and IQR (for Wilcoxon test)
+synoptic_Na %>% get_summary_stats(Na, type = "median_iqr")
+
+bxp_Na <- ggboxplot(
+  synoptic_Na$Na, width = 0.5, add = c("mean", "jitter"), 
+  ylab = "Na (mg/L)", xlab = FALSE
+)
+bxp_Na
+
+gghistogram(synoptic_Na, x = "Na", y = "..density..", 
+            fill = "steelblue",bins = 30, add_density = TRUE)
+# distribution is not symmetrical, so will try sign test
+
+# Sign Test
+synoptic_Na %>%
+  group_by(Year) %>%
+  get_summary_stats(Na, type = "median_iqr")
+
+bxp_na_sign <- ggpaired(synoptic_Na, x = "Year", y = "Na", 
+                        order = c("1980", "1991", "2000", "2011"),
+                        ylab = "Na (mg/L))", xlab = "Year")
+bxp_na_sign
+
+stat.test2 <- synoptic_Na  %>%
+  sign_test(Na ~ Year) %>%
+  add_significance()
+stat.test2
+# there is a significant difference (p<0.001) between Na in 1980, 1991, 2000 and 2011
+# the smallest difference is between 1991 and 2000 (p=0.029)
 
 
 

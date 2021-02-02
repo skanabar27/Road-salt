@@ -1,59 +1,18 @@
-﻿CollectionDate,Depth_m,SpecificCond_uScm-1,Analyte,Result
-02-May-19,0.5,56.17,Sodium (µg/L),8470
-30-Aug-10,0.5,70,"Chloride, total (mg/L)",16
-30-Aug-10,0.5,70,Sodium (µg/L),9580
-30-Aug-10,4,70,"Chloride, total (mg/L)",16
-30-Aug-10,4,70,Sodium (µg/L),10100
-14-Aug-12,0.5,65,"Chloride, total (mg/L)",13
-14-Aug-12,0.5,65,Sodium (µg/L),8440
-14-Aug-12,4,65,"Chloride, total (mg/L)",13
-14-Aug-12,4,65,Sodium (µg/L),8960
-30-Jul-14,0.5,71,"Chloride, total (mg/L)",15
-30-Jul-14,0.5,71,Sodium (µg/L),9200
-30-Jul-14,4,71,"Chloride, total (mg/L)",16
-30-Jul-14,4,71,Sodium (µg/L),9200
-25-Sep-15,0.5,81,"Chloride, total (mg/L)",19
-25-Sep-15,0.5,81,Sodium (µg/L),11000
-25-Sep-15,3.5,81,"Chloride, total (mg/L)",19
-25-Sep-15,3.5,81,Sodium (µg/L),11000
-22-Jun-16,0.5,79,"Chloride, total (mg/L)",17
-22-Jun-16,0.5,79,Sodium (µg/L),10000
-22-Jun-16,3.5,79,"Chloride, total (mg/L)",18
-22-Jun-16,3.5,79,Sodium (µg/L),10000
-22-Sep-16,0.5,83,"Chloride, total (mg/L)",18
-22-Sep-16,0.5,83,Sodium (µg/L),11000
-22-Sep-16,3,83,"Chloride, total (mg/L)",19
-22-Sep-16,3,83,Sodium (µg/L),11000
-21-Jun-17,0.5,69,"Chloride, total (mg/L)",14
-21-Jun-17,0.5,69,Sodium (µg/L),8200
-21-Jun-17,4,70,"Chloride, total (mg/L)",14
-21-Jun-17,4,70,Sodium (µg/L),8200
-26-Sep-17,0.5,73.94,"Chloride, total (mg/L)",15
-26-Sep-17,0.5,73.94,Sodium (µg/L),8700
-26-Sep-17,5,77.92,"Chloride, total (mg/L)",15
-26-Sep-17,5,77.92,Sodium (µg/L),8800
-02-Nov-17,0.5,76.06,"Chloride, total (mg/L)",15
-02-Nov-17,0.5,76.06,Sodium (µg/L),8900
-02-Nov-17,4.5,75.75,"Chloride, total (mg/L)",16
-02-Nov-17,4.5,75.75,Sodium (µg/L),8900
-23-Apr-18,0.5,63.47,"Chloride, total (mg/L)",14
-23-Apr-18,0.5,63.47,Sodium (µg/L),8000
-23-Apr-18,4,66.34,"Chloride, total (mg/L)",13
-23-Apr-18,4,66.34,Sodium (µg/L),7900
-22-Aug-18,0.5,68.5,"Chloride, total (mg/L)",12
-22-Aug-18,3,69.96,"Chloride, total (mg/L)",12
-26-Nov-18,0.5,61.85,"Chloride, total (mg/L)",14
-26-Nov-18,3,61.72,"Chloride, total (mg/L)",12
-26-Nov-18,0.5,61.85,Sodium (µg/L),9200
-26-Nov-18,3,61.72,Sodium (µg/L),9840
-22-Aug-18,0.5,68.5,Sodium (µg/L),8440
-22-Aug-18,3,69.96,Sodium (µg/L),8900
-02-May-19,3.5,55.42,Sodium (µg/L),7680
-28-Aug-19,0.5,60.23,Sodium (µg/L),9370
-28-Aug-19,3,60.2,Sodium (µg/L),8520
-14-Nov-19,0.5,62.16,Sodium (µg/L),10100
-14-Nov-19,3,62.28,Sodium (µg/L),8920
-03-Jul-20,0.5,60.43,Sodium (µg/L),7200
-03-Jul-20,4,60.4,Sodium (µg/L),7200
-18-Aug-20,0.5,82.9,Sodium (µg/L),8300
-18-Aug-20,3,82.81,Sodium (µg/L),8200
+﻿CollectionDate,Month,Depth,Cl,Cond,Na,Ion,Result
+02-May-19,May,0.5,N/A,56.17,8.47,,
+30-Aug-10,August,0.5,16,70,9.58,,
+14-Aug-12,August,0.5,13,65,8.44,,
+30-Jul-14,July,0.5,15,71,9.2,,
+25-Sep-15,September,0.5,19,81,11,,
+22-Jun-16,June,0.5,17,79,10,,
+22-Sep-16,September,0.5,18,83,11,,
+21-Jun-17,June,0.5,14,69,8.2,,
+26-Sep-17,September,0.5,15,73.94,8.7,,
+02-Nov-17,November,0.5,15,76.06,8.9,,
+23-Apr-18,April,0.5,14,63.47,8,,
+22-Aug-18,August,0.5,12,68.5,8.44,,
+26-Nov-18,November,0.5,14,61.85,9.2,,
+28-Aug-19,August,0.5,N/A,60.23,9.37,,
+14-Nov-19,November,0.5,N/A,62.16,10.1,,
+03-Jul-20,July,0.5,N/A,60.43,7.2,,
+18-Aug-20,August,0.5,N/A,82.9,8.3,,
