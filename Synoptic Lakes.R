@@ -49,11 +49,11 @@ hist(synoptic_conductivity_2000$Conductivity,
 
 # all values change over time
 ggplot(synoptic_conductivity) +
-  geom_point(aes(x = Year, y = Conductivity)) +
+  geom_point(aes(x = Year, y = Conductivity, color = Name)) +
   theme_classic() +
   labs(x = "\nYear",
        y = "Conductivity\n",
-       title = "Conductivity in lakes in the HRM ") #+
+       title = "Conductivity in lakes in the HRM ")                   # not usuable
 
 # average conductivity per year
 synoptic_conductivity_mean <- synoptic_conductivity %>%
@@ -70,15 +70,22 @@ synoptic_conductivity_count <- synoptic_conductivity %>%
 
 # average change over time
 #without sd
+png("synoptic mean cond.png", units="mm", width=147, height=100, res=300)
 ggplot(synoptic_conductivity_mean) +
   geom_line(aes(x = Year, y = Mean_Conductivity)) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Conductivity (µS/cm)\n",
        title = "Mean Conductivity of lakes in the HRM over time") +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10))
+dev.off()
 
 #with sd
+png("synoptic mean cond year sd.png", units="mm", width=147, height=100, res=300)
 ggplot(synoptic_conductivity_mean) +
   geom_line(aes(x = Year, y = Mean_Conductivity)) +
   theme_classic() +
@@ -88,9 +95,13 @@ ggplot(synoptic_conductivity_mean) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_errorbar(mapping = aes(x = Year,
                               ymin = Mean_Conductivity-SD_Conductivity,
-                              ymax = Mean_Conductivity+SD_Conductivity), width = 0.2)
-
-
+                              ymax = Mean_Conductivity+SD_Conductivity), width = 0.2) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10))
+dev.off()
 
 
 # plot change in Cl over time
@@ -150,15 +161,23 @@ synoptic_Cl_count <- synoptic_Cl %>%
 
 # average change over time
 #without sd
+png("synoptic mean Cl year.png", units="mm", width=147, height=100, res=300)
 ggplot(synoptic_Cl_mean) +
   geom_line(aes(x = Year, y = Mean_Cl)) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Chloride (mg/L)\n",
        title = "Mean Chloride Concentration in lakes in the HRM over time") +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5),
+       axis.title.x = element_text(size = 12),
+       axis.title.y = element_text(size = 12),
+       axis.text.x = element_text(size = 10),
+       axis.text.y = element_text(size = 10))
+dev.off()
 
 #with sd
+png("synoptic mean Cl year sd.png", units="mm", width=147, height=100, res=300)
 ggplot(synoptic_Cl_mean) +
   geom_line(aes(x = Year, y = Mean_Cl)) +
   theme_classic() +
@@ -168,7 +187,13 @@ ggplot(synoptic_Cl_mean) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_errorbar(mapping = aes(x = Year,
                               ymin = Mean_Cl-SD_Cl,
-                              ymax = Mean_Cl+SD_Cl), width = 0.2)
+                              ymax = Mean_Cl+SD_Cl), width = 0.2) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10))
+dev.off()
 
 
 
@@ -231,15 +256,23 @@ synoptic_Na_count <- synoptic_Na %>%
 
 # average change over time
 #without sd
+png("synoptic mean Na year.png", units="mm", width=147, height=100, res=300)
 ggplot(synoptic_Na_mean) +
   geom_line(aes(x = Year, y = Mean_Na)) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Sodium Concentration (mg/L)\n",
        title = "Mean Sodium Concentration in lakes in the HRM over time") +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10))
+dev.off()
 
 #with sd
+png("synoptic mean Na year sd.png", units="mm", width=147, height=100, res=300)
 ggplot(synoptic_Na_mean) +
   geom_line(aes(x = Year, y = Mean_Na)) +
   theme_classic() +
@@ -249,7 +282,13 @@ ggplot(synoptic_Na_mean) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_errorbar(mapping = aes(x = Year,
                               ymin = Mean_Na-SD_Na,
-                              ymax = Mean_Na+SD_Na), width = 0.2)
+                              ymax = Mean_Na+SD_Na), width = 0.2) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10))
+dev.off()
 
 
 
@@ -268,20 +307,23 @@ synoptic_Na_Cl_mean <- synoptic_Na_Cl %>%
   na.omit() %>%
   dplyr::summarise(Mean_Na = mean(Na), SD_Na = sd(Na), Mean_Cl = mean(Cl), SD_Cl = sd(Cl))
 
-ggplot(synoptic_Na_Cl_mean) +
-  geom_line(aes(x = Year, y = Mean_Na)) +
-  geom_line(aes(x = Year, y = Mean_Cl)) +
+# figure combined
+png("synoptic mean NaCl year.png", units="mm", width=147, height=100, res=300)
+ggplot(synoptic_Na_Cl_mean, aes(x = Year)) +
+  geom_line(aes(y = Mean_Na, color = "mediumpurple4")) +
+  geom_line(aes(y = Mean_Cl, color = "mediumpurple3")) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Ion Concentration (mg/L)\n",
        title = "Mean Sodium and Chloride Concentration in lakes in the HRM over time \n") +
   theme(plot.title = element_text(hjust = 0.5, size = 12)) +
-  scale_color_discrete(name = "Ions", labels = c("Na", "Cl")) #+
-  geom_text(show.legend = TRUE) #+
-  theme(legend.text = element_text(size = 12, face = "italic"),
-        legend.title = element_text(size = 12, face = "bold"))
-  
-  
+  scale_color_discrete(name = "Ions", labels = c("Cl", "Na")) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10))
+dev.off()
 
 
 

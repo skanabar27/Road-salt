@@ -29,6 +29,11 @@ ggplot(data = Water, aes(x = Site, y = C, color = Proximity)) +
         legend.position = c(0.9, 0.7)) +
   scale_color_manual(values = c("mediumvioletred", "midnightblue"))
 
+# t-test for conductivity
+
+
+
+
 # try with SPC
 ggplot(data = Water, aes(x = Site, y = SPC, color = Proximity)) +
   geom_point(alpha = 0.5, size = 2) +

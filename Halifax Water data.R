@@ -78,11 +78,11 @@ LLG_cond_month <- LLG_Sites %>%
   dplyr::group_by(Month) %>%
   dplyr::summarise(Mean_Conductivity = mean(Cond), SD_Conductivity = sd(Cond)) 
 
-class(LLG_cond_month$Month)
-LLG_cond_month$Month <- as.numeric(LLG_cond_month$Month)
+                        #LLG_cond_month$Month <- as.numeric(LLG_cond_month$Month)
 
 LLG_cond_month <- LLG_cond_month %>%
-  arrange(Month)
+  arrange(Month = c("January", "February", "March", "April", "May", "June", "July", 
+                    "August", "September", "October", "November", "December"))
 
 LLG_cond_month <- LLG_cond_month %>%
   mutate(Month = factor(as.character(Month),
