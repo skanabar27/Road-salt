@@ -19,7 +19,7 @@ Water_far <- Water %>%
 
 # plot showing conductivity of each lake
 ggplot(data = Water, aes(x = Site, y = C, color = Proximity)) +
-  geom_point(alpha = 0.5, size = 2) +
+  geom_bar(alpha = 0.5, size = 2) +
   theme_classic() +
   labs(x = "\n Lake",
        y = "Conductivity (µS/cm)\n",
@@ -28,7 +28,7 @@ ggplot(data = Water, aes(x = Site, y = C, color = Proximity)) +
         axis.text.x = element_text(size = 10),
         legend.position = c(0.9, 0.7)) +
   scale_color_manual(values = c("mediumvioletred", "midnightblue"))
-
+                                                                        #use bar plot instead
 # t-test for conductivity
 
 

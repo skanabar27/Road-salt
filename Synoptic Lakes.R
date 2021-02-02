@@ -6,6 +6,9 @@ library(plotly)
 library(plyr)
 library(stars)
 library(tidyr)
+library(tidyverse)
+library(ggpubr)
+library(rstatix)
 
 # add condensed dataset with salt and conductivity data
 # sf library is corrupt?
@@ -104,6 +107,7 @@ ggplot(synoptic_conductivity_mean) +
 dev.off()
 
 
+
 # plot change in Cl over time
 synoptic_Cl <- synoptic %>%
   select("Name", "Year", "Cl")
@@ -194,8 +198,6 @@ ggplot(synoptic_Cl_mean) +
         axis.text.x = element_text(size = 10),
         axis.text.y = element_text(size = 10))
 dev.off()
-
-
 
 
 
@@ -292,8 +294,6 @@ dev.off()
 
 
 
-
-
 # combined Cl and Na
 synoptic_Na_Cl <- synoptic %>%
   select("Name", "Year", "Cl", "Na")
@@ -327,7 +327,98 @@ dev.off()
 
 
 
+# statistical tests
+# conductivity over time
+# identify outliers
+synoptic_conductivity %>% identify_outliers(Conductivity)
+# Whimsical 1991 is an outlier, but not extreme
 
+synoptic_conductivity_1980 %>% identify_outliers(Conductivity)
+# Frog Pond 1980, is an outlier, but not extreme
+
+synoptic_conductivity_1991 %>% identify_outliers(Conductivity)
+
+synoptic_conductivity_2000 %>% identify_outliers(Conductivity)
+
+# check for Normality
+synoptic_conductivity %>% shapiro_test(Conductivity)
+# p<0.001, cannot assume normality
+
+synoptic_conductivity_1980 %>% shapiro_test(Conductivity)
+# p<0.001, cannot assume normality
+
+synoptic_conductivity_1991 %>% shapiro_test(Conductivity)
+# p<0.001, cannot assume normality
+
+synoptic_conductivity_2000 %>% shapiro_test(Conductivity)
+# p=0.00325, cannot assume normality
+
+
+
+# Cl over time
+synoptic_Cl %>% identify_outliers(Cl)
+# Frenchman 2011 is an extreme outlier
+
+synoptic_Cl_1980 %>% identify_outliers(Cl)
+# Chocolate and Frog Pond 1980, are outliers, but not extreme
+
+synoptic_Cl_1991 %>% identify_outliers(Cl)
+
+synoptic_Cl_2000 %>% identify_outliers(Cl)
+
+synoptic_Cl_2011 %>% identify_outliers(Cl)
+# Frenchman 2011 is an extreme outlier
+
+# check for Normality
+synoptic_Cl %>% shapiro_test(Cl)
+# p<0.001, cannot assume normality
+
+synoptic_Cl_1980 %>% shapiro_test(Cl)
+# p<0.001, cannot assume normality
+
+synoptic_Cl_1991 %>% shapiro_test(Cl)
+# p<0.001, cannot assume normality
+
+synoptic_Cl_2000 %>% shapiro_test(Cl)
+# p=0.00184, cannot assume normality
+
+synoptic_Cl_2011 %>% shapiro_test(Cl)
+# p<0.001, cannot assume normality
+
+
+# Na over time
+synoptic_Na %>% identify_outliers(Na)
+# Frenchman 2011 is an extreme outlier
+
+synoptic_Na_1980 %>% identify_outliers(Na)
+# Chocolate and Frog Pond 1980, are outliers, but not extreme
+
+synoptic_Na_1991 %>% identify_outliers(Na)
+
+synoptic_Na_2000 %>% identify_outliers(Na)
+
+synoptic_Na_2011 %>% identify_outliers(Na)
+# Frenchman 2011 is an extreme outlier
+
+# check for Normality
+synoptic_Na %>% shapiro_test(Na)
+# p<0.001, cannot assume normality
+
+synoptic_Na_1980 %>% shapiro_test(Na)
+# p<0.001, cannot assume normality
+
+synoptic_Na_1991 %>% shapiro_test(Na)
+# p<0.001, cannot assume normality
+
+synoptic_Na_2000 %>% shapiro_test(Na)
+# p=0.00173, cannot assume normality
+
+synoptic_Na_2011 %>% shapiro_test(Na)
+# p<0.001, cannot assume normality
+
+
+
+# change between Na and Cl? paired t-test
 
 
 
