@@ -11,11 +11,10 @@ library(ggpubr)
 library(rstatix)
 library(datarium)
 
-LLDL01 <- read.csv("LLDL-01.csv")
+#LLDL01 <- read.csv("LLDL-01.csv")
 
 # conductivity
-LL_cond <- LLDL01 %>%
-  filter("")
+#LL_cond <- LLDL01 %>% filter("")
 
 # Conductivty (µS/cm), Cl (mg/L) and Na (mg/L)
 # only at depth of 0.5
@@ -56,7 +55,7 @@ LLG_cond_year <- LLG_Sites %>%
 LLG_cond_year_count <- LLG_Sites %>%
   dplyr::group_by(Year) %>%
   dplyr::summarise(count = length(Cond))
-# very unequal....
+# 2009:9, 2010:31, 2011:32, 2012:36, 2013:28, 2014:18, 2015:21, 2016:15, 2017:30, 2018:34, 2019:17, 2020:4
 
 # without sd
 png("hw cond year.png", units="mm", width=147, height=100, res=300)
@@ -65,7 +64,7 @@ ggplot(LLG_cond_year) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Conductivity (µS/cm)\n",
-       title = "Mean Conductivity in Lemont Lake over time") +
+       title = "Mean Conductivity in Lemont watershed over time") +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title.x = element_text(size = 12),
@@ -81,7 +80,7 @@ ggplot(LLG_cond_year) +
   theme_classic() +
   labs(x = "\n Year",
        y = "Mean Conductivity (µS/cm)\n",
-       title = "Mean Conductivity in Lemont Lake over time") +
+       title = "Mean Conductivity in Lemont watershed over time") +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_errorbar(mapping = aes(x = Year,
                               ymin = Mean_Conductivity-SD_Conductivity,
@@ -106,7 +105,7 @@ LLG_cond_month <- LLG_Sites %>%
 LLG_cond_month_count <- LLG_Sites %>%
   dplyr::group_by(Month) %>%
   dplyr::summarise(count = length(Cond))
-# ~20-32 samples, except Feb only has 9
+# Jan:21, Feb:9, Mar:22, Apr:21, May:28, Jun:21, Jul:27, Aug:20, Sep:29, Oct:24, Nov:32, Dec:21
 
 # without sd
 png("hw cond month.png", units="mm", width=147, height=100, res=300)
@@ -115,7 +114,7 @@ ggplot(LLG_cond_month) +
   theme_classic() +
   labs(x = "\n Month",
        y = "Mean Conductivity (µS/cm)\n",
-       title = "Mean Conductivity in Lemont Lake per month") +
+       title = "Mean Conductivity in Lemont watershed per month") +
   theme(plot.title = element_text(hjust = 0.5))+
   theme(plot.title = element_text(hjust = 0.5),
         axis.title.x = element_text(size = 12),
@@ -131,7 +130,7 @@ ggplot(LLG_cond_month) +
   theme_classic() +
   labs(x = "\n Month",
        y = "Mean Conductivity (µS/cm)\n",
-       title = "Mean Conductivity in Lemont Lake per month") +
+       title = "Mean Conductivity in Lemont watershed per month") +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_errorbar(mapping = aes(x = Month,
                               ymin = Mean_Conductivity-SD_Conductivity,
@@ -156,18 +155,23 @@ LLG_Sites %>% identify_outliers(Cond)
 LLG_Sites %>% shapiro_test(Cond)
 # p<0.001, cannot assume normality
 
+
 # median and IQR (for Wilcoxon test)
 LLG_Sites %>% get_summary_stats(Cond, type = "median_iqr")
+# n=275, median=69, iqr=127
 
+png("hw cond boxplot.png", units="mm", width=147, height=100, res=300)
 bxp_LLG <- ggboxplot(
   LLG_Sites$Cond, width = 0.5, add = c("mean", "jitter"), 
   ylab = "Conductivity (µS/cm)", xlab = FALSE
 )
 bxp_LLG
+dev.off()
 
 gghistogram(LLG_Sites, x = "Cond", y = "..density..", 
             fill = "steelblue",bins = 30, add_density = TRUE)
 # distribution is not symmetrical, so will try sign test
+
 
 # Sign Test
                                         # variables do not have the same length
@@ -175,6 +179,9 @@ gghistogram(LLG_Sites, x = "Cond", y = "..density..",
 LLG_Sites %>%
   group_by(Sample.Site.ID) %>%
   get_summary_stats(Cond, type = "median_iqr")
+# LLG-01 n=86, median=42.9, iqr=7
+# LLG-02 n=97, median=67, iqr=11
+# LLG-03 n=92, median=228, iqr=96.5
 
 bxp_llg_sign <- ggpaired(LLG_Sites, x = "Sample.Site.ID", y = "Cond", 
                        order = c("LLG-01", "LLG-02", "LLG-03"),
@@ -185,39 +192,54 @@ stat.test <- LLG_Sites  %>%
   sign_test(Cond ~ Sample.Site.ID) %>%
   add_significance()
 stat.test
-# there is a significant difference (p<0.001) between conductivity in 1980, 1991, and 2000
+# 
 
 
 
 # statistical tests
 # conductivity over year
-# identify outliers
-#LLG_Sites %>% identify_outliers(Cond)
-# Whimsical 1991 is an outlier, but not extreme
 
-#synoptic_conductivity_1980 %>% identify_outliers(Conductivity)
-# Frog Pond 1980, is an outlier, but not extreme
+LLG_year <- LLG_Sites %>%
+  select(Year, Cond)
+
+LLG_Sites %>% identify_outliers(Cond)
+# LLG-03 Jan2010/Mar2012/Mar2016 are outliers, but not extreme
 
 # check for Normality
-#synoptic_conductivity %>% shapiro_test(Conductivity)
+LLG_Sites %>% shapiro_test(Cond)
 # p<0.001, cannot assume normality
 
+
 # median and IQR (for Wilcoxon test)
-#synoptic_conductivity %>% get_summary_stats(Conductivity, type = "median_iqr")
+LLG_year %>% get_summary_stats(Cond, type = "median_iqr")
+# n=275, median=69, iqr=127
 
-#bxp_llg_year <- ggboxplot(
-  #LLG_Sites$Cond, width = 0.5, add = c("mean", "jitter"), 
-  #ylab = "Conductivity (µS/cm)", xlab = FALSE)
-#bxp_cond
+bxp_llg_year <- ggboxplot(
+  LLG_year$Cond, width = 0.5, add = c("mean", "jitter"), 
+  ylab = "Conductivity (µS/cm)", xlab = FALSE)
+bxp_llg_year
 
-#gghistogram(LLG_Sites, x = "Cond", y = "..density..", 
+#gghistogram(LLG_year, x = "Cond", y = "..density..", 
             #fill = "steelblue",bins = 30, add_density = TRUE)
 # distribution is not symmetrical, so will try sign test
 
+
 # Sign Test
-LLG_Sites %>%
+LLG_year %>%
   group_by(Year) %>%
   get_summary_stats(Cond, type = "median_iqr")
+# 2009 n=9, median=71, iqr=91
+# 2010 n=31, median=70, iqr=102
+# 2011 n=32, median=69, iqr=75.8
+# 2012 n=36, median=62, iqr=135
+# 2013 n=28, median=62.5, iqr=132
+# 2014 n=18, median=68.5, iqr=109
+# 2015 n=21, median=79, iqr=141
+# 2016 n=15, median=81, iqr=140
+# 2017 n=30, median=73, iqr=108
+# 2018 n=34, median=70.6, iqr=108
+# 2019 n=17, median=58.8, iqr=173
+# 2020 n=4, median=142, iqr=169
 
 bxp_llg_year_sign <- ggpaired(LLG_Sites, x = "Year", y = "Cond", 
                        order = c(2009:2020),
@@ -228,47 +250,41 @@ stat.test <- synoptic_conductivity  %>%
   sign_test(Conductivity ~ Year) %>%
   add_significance()
 stat.test
-# there is a significant difference (p<0.001) between conductivity in 1980, 1991, and 2000
+# 
 
 
 
 # statistical tests
 # conductivity by month
-# identify outliers
-#synoptic_conductivity %>% identify_outliers(Conductivity)
-# Whimsical 1991 is an outlier, but not extreme
 
-# check for Normality
-#synoptic_conductivity %>% shapiro_test(Conductivity)
-# p<0.001, cannot assume normality
-
-# median and IQR (for Wilcoxon test)
-#synoptic_conductivity %>% get_summary_stats(Conductivity, type = "median_iqr")
-
-#bxp_cond <- ggboxplot(
-  #synoptic_conductivity$Conductivity, width = 0.5, add = c("mean", "jitter"), 
-  #ylab = "Conductivity (µS/cm)", xlab = FALSE)
-#bxp_cond
-
-#gghistogram(synoptic_conductivity, x = "Conductivity", y = "..density..", 
-            #fill = "steelblue",bins = 30, add_density = TRUE)
-# distribution is not symmetrical, so will try sign test
 
 # Sign Test
 LLG_Sites %>%
   group_by(Month) %>%
   get_summary_stats(Cond, type = "median_iqr")
+# Jan n=21, median=79, iqr=174
+# Feb n=9, median=79.3, iqr=233
+# Mar n=22, median=62.5, iqr=192
+# Apr n=21, median=64.4, iqr=176
+# May n=28, median=67.0, iqr=170
+# Jun n=21, median=68, iqr=168
+# Jul n=27, median=70, iqr=64.7
+# Aug n=20, median=68.7, iqr=106
+# Sep n=29, median=74, iqr=70
+# Oct n=24, median-68.5, iqr=100
+# Nov n=32, median=70.5, iqr-101
+# Dec n=21, median=70, iqr=104
 
 bxp_llg_month_sign <- ggpaired(LLG_Sites, x = "Month", y = "Cond", 
-                       order = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
+                       order = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
                        ylab = "Conductivity (µS/cm)", xlab = "Year")
 bxp_llg_month_sign
 
-stat.test <- synoptic_conductivity  %>%
-  sign_test(Conductivity ~ Year) %>%
+stat.test <- LLG_Sites  %>%
+  sign_test(Cond ~ Month) %>%
   add_significance()
 stat.test
-# there is a significant difference (p<0.001) between conductivity in 1980, 1991, and 2000
+# 
 
 
 

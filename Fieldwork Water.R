@@ -49,25 +49,39 @@ Water_C %>% identify_outliers(C)
 
 # check for Normality
 Water_C %>% shapiro_test(C)
-# p=0.0162, cannot assume normality
+# statistic=0.804, p=0.0162, cannot assume normality
 
 # median and IQR (for Wilcoxon test)
 Water_C %>% get_summary_stats(C, type = "median_iqr")
 # n=10, median=237, iqr=442
 
+png("fld water cond boxplot.png", units="mm", width=147, height=100, res=300)
 bxp_water <- ggboxplot(
   Water_C$C, width = 0.5, add = c("mean", "jitter"), 
   ylab = "Conductivity (µS/cm)", xlab = FALSE
 )
 bxp_water
+dev.off()
 
 gghistogram(Water_C, x = "C", y = "..density..", 
             fill = "steelblue",bins = 30, add_density = TRUE)
 # distribution is somewhat symmetrical, so will continue with Wilcoxon test
 
-stat.test <- Water_C %>%
-  wilcox_test()
-# there is a significant difference (p<0.001) between conductivity in 1980, 1991, and 2000
+stat.water.prox <- Water_C %>%
+  wilcox_test(C ~ Proximity) %>%
+  add_significance()
+stat.water.prox
+# there is not a significant difference (statistic=11, p=0.834) between conductivity and proximity
+
+stat.water.site <- Water_C %>%
+  wilcox_test(C ~ Site) %>%
+  add_significance()
+stat.water.site
+# there is not a significant difference between conductivity and site
+# B/L, B/O, B/S, B/T, L/O, L/S, O/T p=0.333, p.adj=1
+# S/T p=0.414
+# L/T, O/S p=1
+
 
 
 
