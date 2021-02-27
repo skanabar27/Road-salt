@@ -10,18 +10,12 @@ library(tidyverse)
 library(ggpubr)
 library(rstatix)
 library(datarium)
+library(funtimes)
+library(lubridate)
+library(forecast)
+library(colortools)
 
-#LLDL01 <- read.csv("LLDL-01.csv")
-
-# conductivity
-#LL_cond <- LLDL01 %>% filter("")
-
-# Conductivty (µS/cm), Cl (mg/L) and Na (mg/L)
-# only at depth of 0.5
-### figure out date formatting first
                                                 #create blocks by season?
-
-
 
 LLG_Sites <- read.csv("LLG_Sites.csv")
 
@@ -141,6 +135,93 @@ ggplot(LLG_cond_month) +
         axis.title.y = element_text(size = 12),
         axis.text.x = element_text(size = 10),
         axis.text.y = element_text(size = 10))
+dev.off()
+
+# timeseries
+LLG_Sites <- read.csv("LLG_Sites.csv")
+
+class(LLG_Sites$Date)
+LLG_Sites$Date <- as.Date(LLG_Sites$Date, format = "%d-%b-%y")
+
+LLG_01 <- LLG_Sites %>%
+  select(Sample.Site.ID, Date, Cond) %>%
+  filter(Sample.Site.ID == "LLG-01")
+LLG_02 <- LLG_Sites %>%
+  select(Sample.Site.ID, Date, Cond) %>%
+  filter(Sample.Site.ID == "LLG-02")
+LLG_03 <- LLG_Sites %>%
+  select(Sample.Site.ID, Date, Cond) %>%
+  filter(Sample.Site.ID == "LLG-03")
+
+png("hw time cond separate.png", units="mm", width=147, height=100, res=300)
+time_plot <- ggplot(LLG_Sites, aes(x = Date, y = Cond, colour = Sample.Site.ID)) +
+    geom_line() +
+    scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
+    theme_classic() +
+  labs(x = "\n Year",
+       y = "Conductivity (µS/cm)\n",
+       title = "Conductivity in Lemont watershed from 2010 to 2020") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = c(0.9, 0.8))
+time_plot
+dev.off()
+
+
+time_plot_01 <- ggplot(LLG_01, aes(x = Date, y = Cond)) +
+  geom_line() +
+  scale_x_date(date_labels = "%y", date_breaks = "1 year") +
+  theme_classic()
+time_plot_01
+
+time_plot_02 <- ggplot(LLG_02, aes(x = Date, y = Cond)) +
+  geom_line() +
+  scale_x_date(date_labels = "%y", date_breaks = "1 year") +
+  theme_classic()
+time_plot_02
+
+time_plot_03 <- ggplot(LLG_03, aes(x = Date, y = Cond)) +
+  geom_line() +
+  scale_x_date(date_labels = "%y", date_breaks = "1 year") +
+  theme_classic()
+time_plot_03
+
+
+# conductivity by date
+LLG_cond_date <- LLG_Sites %>%
+  dplyr::group_by(Date) %>%
+  dplyr::summarise(Mean_Conductivity = mean(Cond), SD_Conductivity = sd(Cond))
+
+png("hw time cond mean.png", units="mm", width=147, height=100, res=300)
+time_plot_mean <- ggplot(LLG_cond_date, aes(x = Date, y = Mean_Conductivity)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Conductivity (µS/cm)\n",
+       title = "Conductivity in Lemont watershed from 2010 to 2020") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = c(0.9, 0.8))
+time_plot_mean
+dev.off()
+
+
+# Extract month and year and store in separate columns
+LLG_cond_date$Year <- format(LLG_cond_date$Date, format = "%Y")
+LLG_cond_date$Month <- format(LLG_cond_date$Date, format = "%b")
+LLG_cond_date$Month <- factor(LLG_cond_date$Month, levels = month.abb)
+
+# Create a colour palette using the `colortools` package 
+year_pal <- sequential(color = "darkturquoise", percentage = 5, what = "value")
+
+# Make the plot
+png("hw time cond year.png", units="mm", width=147, height=100, res=300)
+(seasonal <- ggplot(LLG_cond_date, aes(x = Month, y = Mean_Conductivity, group = Year)) +
+    geom_line(aes(colour = Year)) +
+    theme_classic() + 
+    scale_color_manual(values = year_pal)) +
+  labs(x = "\n Year",
+       y = "Conductivity (µS/cm)\n") +
+  theme(plot.title = element_text(hjust = 0.5))
 dev.off()
 
 
@@ -289,6 +370,13 @@ stat.test
 
 
 
+
+# sieve bootstrap version of the t-test
+# no assumption of Normality / independence
+notrend_test(LLG_Sites$Cond)
+# t-value=0.67703, p=0.345
+# phi_1=-0.1953815, phi_2=-0.2744110, phi_3=0.2722356
+# there is no linear trend
 
 
 
