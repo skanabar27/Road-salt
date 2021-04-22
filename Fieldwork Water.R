@@ -11,7 +11,7 @@ Water <- read.csv("Water.csv")
 
 # just conductivity
 Water_C <- Water %>%
-  select(Site, C, Proximity)
+  select(Site, C, Proximity, unprotected)
 
 # close proximity
 Water_close <- Water %>%
@@ -23,12 +23,12 @@ Water_far <- Water %>%
 
 # plot showing conductivity of each lake
 png("fld water cond.png", units="mm", width=147, height=100, res=300)
-ggplot(data = Water, aes(x = Site, y = C, fill = Proximity)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
+ggplot(data = Water, aes(x = Site, y = C, group = Proximity, color = Proximity)) +
+  geom_point(aes(shape = Proximity), na.rm = TRUE, position = position_dodge(width = 0.9)) +
   theme_classic() +
   labs(x = "\n Lake",
-       y = "Conductivity (µS/cm)\n",
-       title = "Conductivity in HRM lakes by proximity to road salt application") +
+       y = "Water Conductivity (µS/cm)\n") +
+  scale_x_discrete(limits = c("Black", "Spectacle", "Oathill", "Topsail", "Lemont")) +
   theme(plot.title = element_text(hjust = 0.5),
         axis.text.x = element_text(size = 10),
         legend.position = c(0.9, 0.7)) +
@@ -82,12 +82,16 @@ stat.water.site
 # S/T p=0.414
 # L/T, O/S p=1
 
+hist(Water$C)
 
+# protected vs not <- prediction based on this
+# Bonferroni correction (2 tests)
 
-
-
-
-
+stat.water.protect <- Water_C %>%
+  wilcox_test(C ~ unprotected) %>%
+  add_significance()
+stat.water.protect
+# statistic=0.5, p=0.0187
 
 
 

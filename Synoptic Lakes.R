@@ -51,21 +51,24 @@ hist(synoptic_conductivity_2000$Conductivity,
      main = "Histogram of lake Conductivity in 2000",
      breaks = 15)
 
+synoptic_conductivity <- synoptic_conductivity %>%
+  dplyr::group_by(Year) %>%
+  na.omit() 
+
 # all values change over time
-#png("synoptic cond all.png", units="mm", width=147, height=100, res=300)
-ggplot(synoptic_conductivity) +
-  geom_point(aes(x = Year, y = Conductivity, color = Name)) +
+png("synoptic cond all.png", units="mm", width=147, height=100, res=300)
+ggplot(synoptic_conductivity, aes(x = Year, y = Conductivity)) +
+  geom_point(alpha = 0.4) +
   theme_classic() +
   labs(x = "\nYear",
-       y = "Conductivity\n",
-       title = "Conductivity in lakes in the HRM ") +
+       y = "Conductivity (µS/cm)\n") +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title.x = element_text(size = 12),
         axis.title.y = element_text(size = 12),
         axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10),
-        legend.position = "none")                               # not using
-#dev.off()
+        axis.text.y = element_text(size = 10)) +
+  stat_summary(fun = "mean", geom = "line")
+dev.off()
 
 # average conductivity per year
 synoptic_conductivity_mean <- synoptic_conductivity %>%
@@ -83,12 +86,12 @@ synoptic_conductivity_count <- synoptic_conductivity %>%
 # average change over time
 #without sd
 png("synoptic mean cond.png", units="mm", width=147, height=100, res=300)
-ggplot(synoptic_conductivity_mean) +
-  geom_line(aes(x = Year, y = Mean_Conductivity)) +
+ggplot() +
+  geom_line(synoptic_conductivity_mean, aes(x = Year, y = Mean_Conductivity)) +
+  geom_point(synoptic_conductivity, aes(x = Year, y = Conductivity, color = Name)) +
   theme_classic() +
   labs(x = "\n Year",
-       y = "Mean Conductivity (µS/cm)\n",
-       title = "Mean Conductivity of lakes in the HRM over time") +
+       y = "Mean Conductivity (µS/cm)\n") +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title.x = element_text(size = 12),
         axis.title.y = element_text(size = 12),
@@ -98,13 +101,13 @@ dev.off()
 
 #with sd
 png("synoptic mean cond year sd.png", units="mm", width=147, height=100, res=300)
-ggplot(synoptic_conductivity_mean) +
-  geom_line(aes(x = Year, y = Mean_Conductivity)) +
+ggplot() +
+  geom_line(synoptic_conductivity_mean, aes(x = Year, y = Mean_Conductivity)) +
+  geom_point(synoptic_conductivity, aes(x = Year, y = Conductivity, color = Name)) +
   theme_classic() +
   labs(x = "\n Year",
-       y = "Mean Conductivity (µS/cm)\n",
-       title = "Mean Conductivity in lakes in the HRM over time") +
-  theme(plot.title = element_text(hjust = 0.5)) +
+       y = "Mean Conductivity (µS/cm)\n") +
+  theme(plot.title = element_text(hjust = 0.5)) #+
   geom_errorbar(mapping = aes(x = Year,
                               ymin = Mean_Conductivity-SD_Conductivity,
                               ymax = Mean_Conductivity+SD_Conductivity), width = 0.2) +
@@ -304,35 +307,59 @@ dev.off()
 
 
 # combined Cl and Na
-synoptic_Na_Cl <- synoptic %>%
-  select("Name", "Year", "Cl", "Na")
+synoptic_Na_Cl <- read.csv("Synoptic NaCl.csv")
 
 synoptic_Na_Cl$Year <- as.numeric(synoptic_Na_Cl$Year)
-synoptic_Na_Cl$Cl <- as.numeric(synoptic_Na_Cl$Cl)
-synoptic_Na_Cl$Na <- as.numeric(synoptic_Na_Cl$Na)
+synoptic_Na_Cl$Concentration <- as.numeric(synoptic_Na_Cl$Concentration)
+synoptic_Na_Cl$Ion <- as.character(synoptic_Na_Cl$Ion)
 
-synoptic_Na_Cl_mean <- synoptic_Na_Cl %>%
-  dplyr::group_by(Year) %>%
-  na.omit() %>%
-  dplyr::summarise(Mean_Na = mean(Na), SD_Na = sd(Na), Mean_Cl = mean(Cl), SD_Cl = sd(Cl))
+synoptic_Na_Cl <- synoptic_Na_Cl %>%
+  na.omit()
 
-# figure combined
-png("synoptic mean NaCl year.png", units="mm", width=147, height=100, res=300)
-ggplot(synoptic_Na_Cl_mean, aes(x = Year)) +
-  geom_line(aes(y = Mean_Na, color = "mediumpurple4")) +
-  geom_line(aes(y = Mean_Cl, color = "mediumpurple3")) +
+
+# figure combined all
+png("synoptic NaCl all.png", units="mm", width=147, height=100, res=300)
+ggplot(synoptic_Na_Cl, aes(x = Year)) +
+  geom_point(aes(y = Concentration, color = Ion, pch = Ion), alpha = 0.4) + 
   theme_classic() +
   labs(x = "\n Year",
-       y = "Mean Ion Concentration (mg/L)\n",
-       title = "Mean Sodium and Chloride Concentration in lakes in the HRM over time \n") +
-  theme(plot.title = element_text(hjust = 0.5, size = 12)) +
+       y = "Ion Concentration (mg/L)\n") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10),
+        legend.position = "none") +
+  facet_wrap(~ Ion) +
+  theme(strip.background = element_blank(),
+        strip.text = element_text(size = 12, face = "bold")) +
+  stat_summary(aes(y = Concentration), fun = "mean", geom = "line")
+dev.off()  
+
+
+
+Ions <- read.csv("Ions.csv")
+Ions <- group_by(Ion)
+Ions$Year <- as.numeric(Ions$Year)
+
+
+# figure combined mean sd
+#png("synoptic NaCl year sd.png", units="mm", width=147, height=100, res=300)
+ggplot(Ions, aes(x = Year)) +
+  geom_line(aes(y = Mean, color = Ion)) +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Mean Ion Concentration (mg/L)\n") +
+  geom_errorbar(mapping = aes(x = Year,
+                              ymin = Mean-SD,ymax = Mean+SD), 
+                alpha=0.4, width = 0.2, colour = "red", "blue") +
   scale_color_discrete(name = "Ions", labels = c("Cl", "Na")) +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title.x = element_text(size = 12),
         axis.title.y = element_text(size = 12),
         axis.text.x = element_text(size = 10),
         axis.text.y = element_text(size = 10))
-dev.off()
+#dev.off()
 
 
 
@@ -530,8 +557,6 @@ stat.test2
 # 2000-2011 df=51, p=6.87xe-7, p.adj=1.37xe-6
 
 
-
-# change between Na and Cl? paired t-test
 
 
 

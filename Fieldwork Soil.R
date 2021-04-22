@@ -7,6 +7,7 @@ library(plyr)
 library(stars)
 library(tidyr)
 
+setwd("~/Desktop/4th year/Honours/Data Compilation/Road salt")
 Soil <- read.csv("Soil Lab.csv")
 
 
@@ -375,6 +376,30 @@ ggplot(data = Soil, aes(x = Distance, y = Soil.C, fill = Round)) +
         axis.text.y = element_text(size = 10))
 dev.off()
 
+# scatterplot
+Soil_2 <- read.csv("Soil Lab 2.csv")
+Soil_2$unprotected <- factor(Soil_2$unprotected, levels = c(1, 0), labels = c("Exposed", "Protected"))
+Soil_2$Round <- factor(Soil_2$Round, levels = c("Before", "After"))
+
+png("soil cond all.png", units="mm", width=147, height=100, res=300)
+ggplot(data = Soil_2, aes(x = Site, y = Soil.C, color = Round)) +
+  geom_point(aes(shape = Side), na.rm = TRUE, position = position_dodge(width = 0.9)) +
+  theme_classic() +
+  labs(x = "\n Lake",
+       y = "Soil Conductivity (µS/cm)\n") +
+  facet_wrap(~ Distance, labeller = labeller(Distance = 
+                                              c("0" = "0 m",
+                                                "10" = "10 m",
+                                                "20" = "20 m"))) +
+  scale_x_discrete(limits = c("Black", "Spectacle", "Oathill", "Topsail", "Lemont")) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(size = 10)) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10, angle = 90),
+        axis.text.y = element_text(size = 10))
+dev.off()
 
 
 # statistical tests
@@ -430,20 +455,6 @@ stat.soil.side <- Soil %>%
 stat.soil.side
 # there is not a significant difference between conductivity and distance (p=0.0551)
 
-
-
-Soil2 <- read.csv("Soil Lab 2.csv")
-mice2 <- Soil %>%
-  group_by(Round) %>%
-  get_summary_stats(Soil.C, type = "mean_sd")
-
-bxp <- ggpaired(mice2, x = "Round", y = "variable", 
-                order = c("Before", "After"),
-                ylab = "Conductivity (µS/cm)", xlab = "Round")
-bxp         #not right
-
-mice2 <- mice2 %>% mutate(differences = before - after)
-head(mice2, 3)
 
 
 

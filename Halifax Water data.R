@@ -14,9 +14,10 @@ library(funtimes)
 library(lubridate)
 library(forecast)
 library(colortools)
+library(viridis)
+library(RColorBrewer)
 
-                                                #create blocks by season?
-
+                                                
 LLG_Sites <- read.csv("LLG_Sites.csv")
 
 # histograms
@@ -43,7 +44,8 @@ ggplot(data = LLG_Sites, aes(x = Cond, fill = Month)) +
 # conductivity by year
 LLG_cond_year <- LLG_Sites %>%
   dplyr::group_by(Year) %>%
-  dplyr::summarise(Mean_Conductivity = mean(Cond), SD_Conductivity = sd(Cond))
+  dplyr::summarise(Mean_Conductivity = mean(Cond), SD_Conductivity = sd(Cond)) %>%
+  dplyr::filter(Year == 2009:2019)
 
 # count per year
 LLG_cond_year_count <- LLG_Sites %>%
@@ -73,8 +75,7 @@ ggplot(LLG_cond_year) +
   geom_line(aes(x = Year, y = Mean_Conductivity)) +
   theme_classic() +
   labs(x = "\n Year",
-       y = "Mean Conductivity (µS/cm)\n",
-       title = "Mean Conductivity in Lemont watershed over time") +
+       y = "Mean Conductivity (µS/cm)\n") +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_errorbar(mapping = aes(x = Year,
                               ymin = Mean_Conductivity-SD_Conductivity,
@@ -83,10 +84,32 @@ ggplot(LLG_cond_year) +
         axis.title.x = element_text(size = 12),
         axis.title.y = element_text(size = 12),
         axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10))
+        axis.text.y = element_text(size = 10)) +
+  scale_x_continuous(breaks = seq(2010, 2018, by = 4))
 dev.off()
 
 
+
+# cond year all
+LLG_cond_all <- LLG_Sites %>%
+  dplyr::select(Sample.Site.ID, Cond, Date)
+
+#png("hw cond all.png", units="mm", width=147, height=100, res=300)
+ggplot(LLG_cond_all) +
+  geom_point(aes(x = Date, y = Cond)) +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Conductivity (µS/cm)\n") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10))  +
+  stat_summary(fun = "mean", geom = "line")
+#dev.off()
+
+  scale_x_continuous(breaks = seq(2010, 2018, by = 4)) +
 
 # conductivity by month
 LLG_Sites$Month <- factor(LLG_Sites$Month, levels = month.abb)
@@ -142,6 +165,8 @@ LLG_Sites <- read.csv("LLG_Sites.csv")
 
 class(LLG_Sites$Date)
 LLG_Sites$Date <- as.Date(LLG_Sites$Date, format = "%d-%b-%y")
+LLG_Sites$Sample.Site.ID <- factor(LLG_Sites$Sample.Site.ID, labels = c(1, 2, 3))
+LLG_Sites$Sample.Site.ID <- rename(LLG_Sites$Sample.Site.ID, labels = c(Site))
 
 LLG_01 <- LLG_Sites %>%
   select(Sample.Site.ID, Date, Cond) %>%
@@ -159,10 +184,10 @@ time_plot <- ggplot(LLG_Sites, aes(x = Date, y = Cond, colour = Sample.Site.ID))
     scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
     theme_classic() +
   labs(x = "\n Year",
-       y = "Conductivity (µS/cm)\n",
-       title = "Conductivity in Lemont watershed from 2010 to 2020") +
+       y = "Conductivity (µS/cm)\n") +
   theme(plot.title = element_text(hjust = 0.5),
-        legend.position = c(0.9, 0.8))
+        legend.position = c(0.9, 0.8)) +
+  scale_colour_discrete("Sample Site")
 time_plot
 dev.off()
 
@@ -197,32 +222,64 @@ time_plot_mean <- ggplot(LLG_cond_date, aes(x = Date, y = Mean_Conductivity)) +
   scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
   theme_classic() +
   labs(x = "\n Year",
-       y = "Conductivity (µS/cm)\n",
-       title = "Conductivity in Lemont watershed from 2010 to 2020") +
+       y = "Conductivity (µS/cm)\n") +
   theme(plot.title = element_text(hjust = 0.5),
         legend.position = c(0.9, 0.8))
 time_plot_mean
 dev.off()
 
 
+
+# all conductivity by date
+class(LLG_cond_all$Date)
+LLG_cond_all$Date <- as.Date(LLG_cond_all$Date, format = "%d-%b-%y")
+
+png("hw time cond all.png", units="mm", width=147, height=100, res=300)
+time_plot_mean_a <- ggplot(LLG_cond_all, aes(x = Date, y = Cond)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Conductivity (µS/cm)\n") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = c(0.9, 0.8))
+time_plot_mean_a
+dev.off()
+
+
+
 # Extract month and year and store in separate columns
-LLG_cond_date$Year <- format(LLG_cond_date$Date, format = "%Y")
-LLG_cond_date$Month <- format(LLG_cond_date$Date, format = "%b")
-LLG_cond_date$Month <- factor(LLG_cond_date$Month, levels = month.abb)
+LLG_cond_all$Year <- format(LLG_cond_all$Date, format = "%Y")
+LLG_cond_all$Month <- format(LLG_cond_all$Date, format = "%b")
+LLG_cond_all$Month <- factor(LLG_cond_all$Month, levels = month.abb)
 
 # Create a colour palette using the `colortools` package 
 year_pal <- sequential(color = "darkturquoise", percentage = 5, what = "value")
+display.brewer.all()
+display.brewer.pal(12, "Set3")
+
 
 # Make the plot
 png("hw time cond year.png", units="mm", width=147, height=100, res=300)
 (seasonal <- ggplot(LLG_cond_date, aes(x = Month, y = Mean_Conductivity, group = Year)) +
     geom_line(aes(colour = Year)) +
     theme_classic() + 
-    scale_color_manual(values = year_pal)) +
+    scale_color_brewer(palette = "Set3")) +
   labs(x = "\n Year",
        y = "Conductivity (µS/cm)\n") +
   theme(plot.title = element_text(hjust = 0.5))
 dev.off()
+
+# all values
+#png("hw time cond year all.png", units="mm", width=147, height=100, res=300)
+(seasonal <- ggplot(LLG_cond_all, aes(x = Month, y = Cond, group = Year)) +
+    geom_line(aes(colour = Year)) +
+    theme_classic() + 
+    scale_color_brewer(palette = "Set3")) +
+  labs(x = "\n Year",
+       y = "Conductivity (µS/cm)\n") +
+  theme(plot.title = element_text(hjust = 0.5))
+#dev.off()
 
 
 
@@ -264,17 +321,6 @@ LLG_Sites %>%
 # LLG-02 n=97, median=67, iqr=11
 # LLG-03 n=92, median=228, iqr=96.5
 
-bxp_llg_sign <- ggpaired(LLG_Sites, x = "Sample.Site.ID", y = "Cond", 
-                       order = c("LLG-01", "LLG-02", "LLG-03"),
-                       ylab = "Conductivity (µS/cm)", xlab = "Site")
-bxp_llg_sign
-
-stat.test <- LLG_Sites  %>%
-  sign_test(Cond ~ Sample.Site.ID) %>%
-  add_significance()
-stat.test
-# 
-
 
 
 # statistical tests
@@ -288,7 +334,7 @@ LLG_Sites %>% identify_outliers(Cond)
 
 # check for Normality
 LLG_Sites %>% shapiro_test(Cond)
-# p<0.001, cannot assume normality
+# statistic=0.778, p<0.001, cannot assume normality
 
 
 # median and IQR (for Wilcoxon test)
@@ -322,23 +368,10 @@ LLG_year %>%
 # 2019 n=17, median=58.8, iqr=173
 # 2020 n=4, median=142, iqr=169
 
-bxp_llg_year_sign <- ggpaired(LLG_Sites, x = "Year", y = "Cond", 
-                       order = c(2009:2020),
-                       ylab = "Conductivity (µS/cm)", xlab = "Year")
-bxp_llg_year_sign
-
-stat.test <- synoptic_conductivity  %>%
-  sign_test(Conductivity ~ Year) %>%
-  add_significance()
-stat.test
-# 
-
 
 
 # statistical tests
 # conductivity by month
-
-
 # Sign Test
 LLG_Sites %>%
   group_by(Month) %>%
@@ -356,18 +389,6 @@ LLG_Sites %>%
 # Nov n=32, median=70.5, iqr-101
 # Dec n=21, median=70, iqr=104
 
-bxp_llg_month_sign <- ggpaired(LLG_Sites, x = "Month", y = "Cond", 
-                       order = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
-                       ylab = "Conductivity (µS/cm)", xlab = "Year")
-bxp_llg_month_sign
-
-stat.test <- LLG_Sites  %>%
-  sign_test(Cond ~ Month) %>%
-  add_significance()
-stat.test
-# 
-
-
 
 
 
@@ -379,6 +400,6 @@ notrend_test(LLG_Sites$Cond)
 # there is no linear trend
 
 
-
-
+# road salt application Nov-Apr
+# vs trend in off season
 

@@ -1,0 +1,409 @@
+﻿Name,Year,Concentration,Ion
+Anderson,1980,N/A,Cl
+Anderson,1991,N/A,Cl
+Anderson,2000,12.1,Cl
+Anderson,2011,14.2,Cl
+Banook,1980,55,Cl
+Banook,1991,90.78,Cl
+Banook,2000,92.8,Cl
+Banook,2011,175,Cl
+Bayers,1980,44,Cl
+Bayers,1991,N/A,Cl
+Bayers,2000,106,Cl
+Bayers,2011,218,Cl
+Bell,1980,58,Cl
+Bell,1991,8.4,Cl
+Bell,2000,9.2,Cl
+Bell,2011,14.6,Cl
+Big Albro,1980,32,Cl
+Big Albro,1991,89.3,Cl
+Big Albro,2000,89.2,Cl
+Big Albro,2011,109,Cl
+Bissett,1980,77,Cl
+Bissett,1991,157,Cl
+Bissett,2000,149.5,Cl
+Bissett,2011,209.25,Cl
+Charles,1980,20.5,Cl
+Charles,1991,43.2,Cl
+Charles,2000,52.6,Cl
+Charles,2011,55.35,Cl
+Chocolate,1980,113,Cl
+Chocolate,1991,125,Cl
+Chocolate,2000,122,Cl
+Chocolate,2011,128.25,Cl
+Colbart,1980,10,Cl
+Colbart,1991,74.8,Cl
+Colbart,2000,70.8,Cl
+Colbart,2011,118.9,Cl
+Cranberry,1980,6,Cl
+Cranberry,1991,120,Cl
+Cranberry,2000,144,Cl
+Cranberry,2011,140.5,Cl
+First,1980,23,Cl
+First,1991,82.05,Cl
+First,2000,115.5,Cl
+First,2011,126.1,Cl
+First Chain,1980,49,Cl
+First Chain,1991,87,Cl
+First Chain,2000,80.3,Cl
+First Chain,2011,91.6,Cl
+Fletcher,1980,18.2,Cl
+Fletcher,1991,27.97,Cl
+Fletcher,2000,34.2,Cl
+Fletcher,2011,33.66666667,Cl
+Fraser,1980,29.5,Cl
+Fraser,1991,8.5,Cl
+Fraser,2000,15.8,Cl
+Fraser,2011,17.15,Cl
+Frenchman,1980,3.8,Cl
+Frenchman,1991,110,Cl
+Frenchman,2000,126,Cl
+Frenchman,2011,349.4,Cl
+Frog Pond,1980,125,Cl
+Frog Pond,1991,148,Cl
+Frog Pond,2000,129,Cl
+Frog Pond,2011,160.7,Cl
+Governor,1980,4.5,Cl
+Governor,1991,58.9,Cl
+Governor,2000,103.7,Cl
+Governor,2011,123.4,Cl
+Grand,1980,9.3,Cl
+Grand,1991,14.07,Cl
+Grand,2000,18.6,Cl
+Grand,2011,19.4,Cl
+Kearney,1980,5.2,Cl
+Kearney,1991,16.65,Cl
+Kearney,2000,36,Cl
+Kearney,2011,55.7,Cl
+Kinsac,1980,8.1,Cl
+Kinsac,1991,9.93,Cl
+Kinsac,2000,13.7,Cl
+Kinsac,2011,19.93333333,Cl
+Lemont,1980,5,Cl
+Lemont,1991,5.7,Cl
+Lemont,2000,10.1,Cl
+Lemont,2011,16.6,Cl
+Little Albro,1980,75,Cl
+Little Albro,1991,92,Cl
+Little Albro,2000,81.3,Cl
+Little Albro,2011,118.6,Cl
+Long ,1980,36,Cl
+Long ,1991,42.6,Cl
+Long ,2000,52.8,Cl
+Long ,2011,77.73333333,Cl
+Loon,1980,6.1,Cl
+Loon,1991,67.85,Cl
+Loon,2000,76,Cl
+Loon,2011,79.05,Cl
+Major,1980,30.5,Cl
+Major,1991,4.56,Cl
+Major,2000,5.5,Cl
+Major,2011,6.833333333,Cl
+Maynards ,1980,91,Cl
+Maynards ,1991,103,Cl
+Maynards ,2000,94.1,Cl
+Maynards ,2011,88.2,Cl
+Micmac,1980,47,Cl
+Micmac,1991,76.2,Cl
+Micmac,2000,85.3,Cl
+Micmac,2011,235.65,Cl
+Miller ,1980,20.3,Cl
+Miller ,1991,23.65,Cl
+Miller ,2000,21.5,Cl
+Miller ,2011,26.2,Cl
+Morris,1980,41.7,Cl
+Morris,1991,74.9,Cl
+Morris,2000,74.4,Cl
+Morris,2011,103.16,Cl
+Oathill,1980,84,Cl
+Oathill,1991,152,Cl
+Oathill,2000,124,Cl
+Oathill,2011,158.6,Cl
+Paper Mill,1980,14,Cl
+Paper Mill,1991,17,Cl
+Paper Mill,2000,36.4,Cl
+Paper Mill,2011,61.5,Cl
+Parr,1980,32,Cl
+Parr,1991,12.3,Cl
+Parr,2000,16.7,Cl
+Parr,2011,16.7,Cl
+Penhorn,1980,8.3,Cl
+Penhorn,1991,171,Cl
+Penhorn,2000,139,Cl
+Penhorn,2011,159.1,Cl
+Powder Mill,1980,33,Cl
+Powder Mill,1991,28.7,Cl
+Powder Mill,2000,43.3,Cl
+Powder Mill,2011,47.8,Cl
+Power Pond,1980,N/A,Cl
+Power Pond,1991,N/A,Cl
+Power Pond,2000,39.7,Cl
+Power Pond,2011,49.8,Cl
+Rocky,1980,14,Cl
+Rocky,1991,40.9,Cl
+Rocky,2000,64,Cl
+Rocky,2011,75.3,Cl
+Russell,1980,80,Cl
+Russell,1991,112.63,Cl
+Russell,2000,137,Cl
+Russell,2011,233.6,Cl
+Sandy,1980,13.7,Cl
+Sandy,1991,24.95,Cl
+Sandy,2000,30.1,Cl
+Sandy,2011,53.6,Cl
+Second,1980,70,Cl
+Second,1991,15.5,Cl
+Second,2000,33,Cl
+Second,2011,36.35,Cl
+Second Chain,1980,66,Cl
+Second Chain,1991,115,Cl
+Second Chain,2000,91.7,Cl
+Second Chain,2011,118.8,Cl
+Settle,1980,27,Cl
+Settle,1991,136,Cl
+Settle,2000,120,Cl
+Settle,2011,137.5,Cl
+Soldier,1980,7.7,Cl
+Soldier,1991,16.67,Cl
+Soldier,2000,19.3,Cl
+Soldier,2011,21.2,Cl
+Spider,1980,5.1,Cl
+Spider,1991,3.4,Cl
+Spider,2000,4.7,Cl
+Spider,2011,6,Cl
+Spruce Hill,1980,3.9,Cl
+Spruce Hill,1991,5,Cl
+Spruce Hill,2000,6,Cl
+Spruce Hill,2011,7.2,Cl
+Susie,1980,7.9,Cl
+Susie,1991,10.45,Cl
+Susie,2000,32.3,Cl
+Susie,2011,69.95,Cl
+Third,1980,11.3,Cl
+Third,1991,15.95,Cl
+Third,2000,28.5,Cl
+Third,2011,28.1,Cl
+Thomas,1980,20,Cl
+Thomas,1991,28.05,Cl
+Thomas,2000,35.3,Cl
+Thomas,2011,36.25,Cl
+Topsail,1980,5,Cl
+Topsail,1991,5.5,Cl
+Topsail,2000,11.3,Cl
+Topsail,2011,18.2,Cl
+Whimsical,1980,108,Cl
+Whimsical,1991,197,Cl
+Whimsical,2000,160,Cl
+Whimsical,2011,263.8,Cl
+William,1980,18.4,Cl
+William,1991,26.73,Cl
+William,2000,37,Cl
+William,2011,38.76666667,Cl
+Williams,1980,46,Cl
+Williams,1991,41.2,Cl
+Williams,2000,42.2,Cl
+Williams,2011,54.2,Cl
+Anderson,1980,N/A,Na
+Anderson,1991,N/A,Na
+Anderson,2000,7.2,Na
+Anderson,2011,8.2,Na
+Banook,1980,31.5,Na
+Banook,1991,56.2,Na
+Banook,2000,59.1,Na
+Banook,2011,103.95,Na
+Bayers,1980,24,Na
+Bayers,1991,N/A,Na
+Bayers,2000,61.5,Na
+Bayers,2011,124.8,Na
+Bell,1980,4.6,Na
+Bell,1991,4.6,Na
+Bell,2000,5.1,Na
+Bell,2011,7.9,Na
+Big Albro,1980,20,Na
+Big Albro,1991,56.7,Na
+Big Albro,2000,56.2,Na
+Big Albro,2011,64.1,Na
+Bissett,1980,40,Na
+Bissett,1991,94.5,Na
+Bissett,2000,91.1,Na
+Bissett,2011,128.1,Na
+Charles,1980,13,Na
+Charles,1991,27,Na
+Charles,2000,32.3,Na
+Charles,2011,33.2,Na
+Chocolate,1980,70,Na
+Chocolate,1991,80.3,Na
+Chocolate,2000,76.7,Na
+Chocolate,2011,76.1,Na
+Colbart,1980,21,Na
+Colbart,1991,47.5,Na
+Colbart,2000,44,Na
+Colbart,2011,70.3,Na
+Cranberry,1980,15,Na
+Cranberry,1991,73,Na
+Cranberry,2000,85.7,Na
+Cranberry,2011,85,Na
+First,1980,40,Na
+First,1991,51.1,Na
+First,2000,70.9,Na
+First,2011,77.4,Na
+First Chain,1980,30,Na
+First Chain,1991,53,Na
+First Chain,2000,48.1,Na
+First Chain,2011,57.2,Na
+Fletcher,1980,10.7,Na
+Fletcher,1991,16.9,Na
+Fletcher,2000,21.6,Na
+Fletcher,2011,20.7,Na
+Fraser,1980,4.7,Na
+Fraser,1991,5,Na
+Fraser,2000,9.2,Na
+Fraser,2011,9.55,Na
+Frenchman,1980,2.3,Na
+Frenchman,1991,69.2,Na
+Frenchman,2000,74.5,Na
+Frenchman,2011,360.5,Na
+Frog Pond,1980,73,Na
+Frog Pond,1991,90,Na
+Frog Pond,2000,78.4,Na
+Frog Pond,2011,97.7,Na
+Governor,1980,18,Na
+Governor,1991,38.4,Na
+Governor,2000,60.4,Na
+Governor,2011,76.45,Na
+Grand,1980,5.7,Na
+Grand,1991,8.8,Na
+Grand,2000,11.5,Na
+Grand,2011,11.96666667,Na
+Kearney,1980,8.4,Na
+Kearney,1991,10.1,Na
+Kearney,2000,21.4,Na
+Kearney,2011,32.3,Na
+Kinsac,1980,4.8,Na
+Kinsac,1991,6.6,Na
+Kinsac,2000,7.9,Na
+Kinsac,2011,11.6,Na
+Lemont,1980,3.8,Na
+Lemont,1991,3.5,Na
+Lemont,2000,5.8,Na
+Lemont,2011,9.6,Na
+Little Albro,1980,22,Na
+Little Albro,1991,56.7,Na
+Little Albro,2000,51.9,Na
+Little Albro,2011,73.5,Na
+Long ,1980,12,Na
+Long ,1991,27.3,Na
+Long ,2000,32.3,Na
+Long ,2011,44.56666667,Na
+Loon,1980,17.5,Na
+Loon,1991,43,Na
+Loon,2000,46.2,Na
+Loon,2011,48.5,Na
+Major,1980,3.4,Na
+Major,1991,2.9,Na
+Major,2000,3.7,Na
+Major,2011,4.133333333,Na
+Maynards ,1980,42,Na
+Maynards ,1991,63.5,Na
+Maynards ,2000,58.4,Na
+Maynards ,2011,55.23333333,Na
+Micmac,1980,27,Na
+Micmac,1991,47.5,Na
+Micmac,2000,50.7,Na
+Micmac,2011,139,Na
+Miller ,1980,11.5,Na
+Miller ,1991,14.7,Na
+Miller ,2000,13.7,Na
+Miller ,2011,16.05,Na
+Morris,1980,24,Na
+Morris,1991,46.4,Na
+Morris,2000,45.3,Na
+Morris,2011,61.56,Na
+Oathill,1980,53,Na
+Oathill,1991,89.9,Na
+Oathill,2000,76.4,Na
+Oathill,2011,96.5,Na
+Paper Mill,1980,8.1,Na
+Paper Mill,1991,10.3,Na
+Paper Mill,2000,21.2,Na
+Paper Mill,2011,36.4,Na
+Parr,1980,6,Na
+Parr,1991,8,Na
+Parr,2000,10.6,Na
+Parr,2011,10,Na
+Penhorn,1980,46,Na
+Penhorn,1991,108,Na
+Penhorn,2000,85.4,Na
+Penhorn,2011,93.8,Na
+Powder Mill,1980,14,Na
+Powder Mill,1991,17.8,Na
+Powder Mill,2000,26.5,Na
+Powder Mill,2011,27.3,Na
+Power Pond,1980,N/A,Na
+Power Pond,1991,N/A,Na
+Power Pond,2000,25.6,Na
+Power Pond,2011,28.3,Na
+Rocky,1980,19.4,Na
+Rocky,1991,26,Na
+Rocky,2000,38.3,Na
+Rocky,2011,43.45,Na
+Russell,1980,47,Na
+Russell,1991,70,Na
+Russell,2000,80.5,Na
+Russell,2011,138.6,Na
+Sandy,1980,8.4,Na
+Sandy,1991,15.3,Na
+Sandy,2000,18.1,Na
+Sandy,2011,31.2,Na
+Second,1980,5.7,Na
+Second,1991,9,Na
+Second,2000,19.6,Na
+Second,2011,21.5,Na
+Second Chain,1980,38,Na
+Second Chain,1991,70.5,Na
+Second Chain,2000,53.5,Na
+Second Chain,2011,67.9,Na
+Settle,1980,33,Na
+Settle,1991,82.7,Na
+Settle,2000,75.5,Na
+Settle,2011,83.2,Na
+Soldier,1980,4.6,Na
+Soldier,1991,10.1,Na
+Soldier,2000,11.1,Na
+Soldier,2011,13.26666667,Na
+Spider,1980,2.5,Na
+Spider,1991,2.2,Na
+Spider,2000,3,Na
+Spider,2011,3.4,Na
+Spruce Hill,1980,3.2,Na
+Spruce Hill,1991,2.9,Na
+Spruce Hill,2000,3.5,Na
+Spruce Hill,2011,4.2,Na
+Susie,1980,3,Na
+Susie,1991,6.4,Na
+Susie,2000,18.6,Na
+Susie,2011,39.3,Na
+Third,1980,7,Na
+Third,1991,9.5,Na
+Third,2000,17,Na
+Third,2011,16.2,Na
+Thomas,1980,12.8,Na
+Thomas,1991,17.1,Na
+Thomas,2000,22.3,Na
+Thomas,2011,21.25,Na
+Topsail,1980,3.7,Na
+Topsail,1991,3.4,Na
+Topsail,2000,6.6,Na
+Topsail,2011,10.9,Na
+Whimsical,1980,63,Na
+Whimsical,1991,114,Na
+Whimsical,2000,95.2,Na
+Whimsical,2011,159.4,Na
+William,1980,11,Na
+William,1991,16.5,Na
+William,2000,23.2,Na
+William,2011,23.1,Na
+Williams,1980,26,Na
+Williams,1991,28.3,Na
+Williams,2000,27.4,Na
+Williams,2011,31.7,Na
