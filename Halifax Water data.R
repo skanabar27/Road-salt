@@ -14,31 +14,9 @@ library(funtimes)
 library(lubridate)
 library(forecast)
 library(colortools)
-library(viridis)
-library(RColorBrewer)
 
                                                 
 LLG_Sites <- read.csv("LLG_Sites.csv")
-
-# histograms
-# by year
-ggplot(data = LLG_Sites, aes(x = Cond, fill = Year)) +
-  geom_histogram(binwidth = 50) + 
-  facet_wrap(~ Year) +
-  labs(x = "Conductivity (µS/cm)",
-       y = "Frequency",
-       title = "Histogram of Lemont Lake Conductivity by Year") + 
-  theme_bw()
-
-# by month
-ggplot(data = LLG_Sites, aes(x = Cond, fill = Month)) +
-  geom_histogram(binwidth = 50) + 
-  facet_wrap(~ Month) +
-  labs(x = "Conductivity (µS/cm)",
-       y = "Frequency",
-       title = "Histogram of Lemont Lake Conductivity by Month") + 
-  theme_bw()
-                                                                      # change order of months!!
 
 
 # conductivity by year
@@ -52,22 +30,6 @@ LLG_cond_year_count <- LLG_Sites %>%
   dplyr::group_by(Year) %>%
   dplyr::summarise(count = length(Cond))
 # 2009:9, 2010:31, 2011:32, 2012:36, 2013:28, 2014:18, 2015:21, 2016:15, 2017:30, 2018:34, 2019:17, 2020:4
-
-# without sd
-png("hw cond year.png", units="mm", width=147, height=100, res=300)
-ggplot(LLG_cond_year) +
-  geom_line(aes(x = Year, y = Mean_Conductivity)) +
-  theme_classic() +
-  labs(x = "\n Year",
-       y = "Mean Conductivity (µS/cm)\n",
-       title = "Mean Conductivity in Lemont watershed over time") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_text(size = 12),
-        axis.title.y = element_text(size = 12),
-        axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10))
-dev.off()
 
 # with sd
 png("hw cond year sd.png", units="mm", width=147, height=100, res=300)
@@ -88,28 +50,6 @@ ggplot(LLG_cond_year) +
   scale_x_continuous(breaks = seq(2010, 2018, by = 4))
 dev.off()
 
-
-
-# cond year all
-LLG_cond_all <- LLG_Sites %>%
-  dplyr::select(Sample.Site.ID, Cond, Date)
-
-#png("hw cond all.png", units="mm", width=147, height=100, res=300)
-ggplot(LLG_cond_all) +
-  geom_point(aes(x = Date, y = Cond)) +
-  theme_classic() +
-  labs(x = "\n Year",
-       y = "Conductivity (µS/cm)\n") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_text(size = 12),
-        axis.title.y = element_text(size = 12),
-        axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10))  +
-  stat_summary(fun = "mean", geom = "line")
-#dev.off()
-
-  scale_x_continuous(breaks = seq(2010, 2018, by = 4)) +
 
 # conductivity by month
 LLG_Sites$Month <- factor(LLG_Sites$Month, levels = month.abb)
@@ -160,6 +100,7 @@ ggplot(LLG_cond_month) +
         axis.text.y = element_text(size = 10))
 dev.off()
 
+
 # timeseries
 LLG_Sites <- read.csv("LLG_Sites.csv")
 
@@ -192,25 +133,6 @@ time_plot
 dev.off()
 
 
-time_plot_01 <- ggplot(LLG_01, aes(x = Date, y = Cond)) +
-  geom_line() +
-  scale_x_date(date_labels = "%y", date_breaks = "1 year") +
-  theme_classic()
-time_plot_01
-
-time_plot_02 <- ggplot(LLG_02, aes(x = Date, y = Cond)) +
-  geom_line() +
-  scale_x_date(date_labels = "%y", date_breaks = "1 year") +
-  theme_classic()
-time_plot_02
-
-time_plot_03 <- ggplot(LLG_03, aes(x = Date, y = Cond)) +
-  geom_line() +
-  scale_x_date(date_labels = "%y", date_breaks = "1 year") +
-  theme_classic()
-time_plot_03
-
-
 # conductivity by date
 LLG_cond_date <- LLG_Sites %>%
   dplyr::group_by(Date) %>%
@@ -227,7 +149,6 @@ time_plot_mean <- ggplot(LLG_cond_date, aes(x = Date, y = Mean_Conductivity)) +
         legend.position = c(0.9, 0.8))
 time_plot_mean
 dev.off()
-
 
 
 # all conductivity by date
@@ -247,7 +168,6 @@ time_plot_mean_a
 dev.off()
 
 
-
 # Extract month and year and store in separate columns
 LLG_cond_all$Year <- format(LLG_cond_all$Date, format = "%Y")
 LLG_cond_all$Month <- format(LLG_cond_all$Date, format = "%b")
@@ -257,7 +177,6 @@ LLG_cond_all$Month <- factor(LLG_cond_all$Month, levels = month.abb)
 year_pal <- sequential(color = "darkturquoise", percentage = 5, what = "value")
 display.brewer.all()
 display.brewer.pal(12, "Set3")
-
 
 # Make the plot
 png("hw time cond year.png", units="mm", width=147, height=100, res=300)
@@ -270,136 +189,5 @@ png("hw time cond year.png", units="mm", width=147, height=100, res=300)
   theme(plot.title = element_text(hjust = 0.5))
 dev.off()
 
-# all values
-#png("hw time cond year all.png", units="mm", width=147, height=100, res=300)
-(seasonal <- ggplot(LLG_cond_all, aes(x = Month, y = Cond, group = Year)) +
-    geom_line(aes(colour = Year)) +
-    theme_classic() + 
-    scale_color_brewer(palette = "Set3")) +
-  labs(x = "\n Year",
-       y = "Conductivity (µS/cm)\n") +
-  theme(plot.title = element_text(hjust = 0.5))
-#dev.off()
 
-
-
-# statistical tests
-# conductivity across LLG sites
-# identify outliers
-LLG_Sites %>% identify_outliers(Cond)
-# LLG-03 Jan2010/Mar2012/Mar2016 are outliers, but not extreme
-
-# check for Normality
-LLG_Sites %>% shapiro_test(Cond)
-# p<0.001, cannot assume normality
-
-
-# median and IQR (for Wilcoxon test)
-LLG_Sites %>% get_summary_stats(Cond, type = "median_iqr")
-# n=275, median=69, iqr=127
-
-png("hw cond boxplot.png", units="mm", width=147, height=100, res=300)
-bxp_LLG <- ggboxplot(
-  LLG_Sites$Cond, width = 0.5, add = c("mean", "jitter"), 
-  ylab = "Conductivity (µS/cm)", xlab = FALSE
-)
-bxp_LLG
-dev.off()
-
-gghistogram(LLG_Sites, x = "Cond", y = "..density..", 
-            fill = "steelblue",bins = 30, add_density = TRUE)
-# distribution is not symmetrical, so will try sign test
-
-
-# Sign Test
-                                        # variables do not have the same length
-
-LLG_Sites %>%
-  group_by(Sample.Site.ID) %>%
-  get_summary_stats(Cond, type = "median_iqr")
-# LLG-01 n=86, median=42.9, iqr=7
-# LLG-02 n=97, median=67, iqr=11
-# LLG-03 n=92, median=228, iqr=96.5
-
-
-
-# statistical tests
-# conductivity over year
-
-LLG_year <- LLG_Sites %>%
-  select(Year, Cond)
-
-LLG_Sites %>% identify_outliers(Cond)
-# LLG-03 Jan2010/Mar2012/Mar2016 are outliers, but not extreme
-
-# check for Normality
-LLG_Sites %>% shapiro_test(Cond)
-# statistic=0.778, p<0.001, cannot assume normality
-
-
-# median and IQR (for Wilcoxon test)
-LLG_year %>% get_summary_stats(Cond, type = "median_iqr")
-# n=275, median=69, iqr=127
-
-bxp_llg_year <- ggboxplot(
-  LLG_year$Cond, width = 0.5, add = c("mean", "jitter"), 
-  ylab = "Conductivity (µS/cm)", xlab = FALSE)
-bxp_llg_year
-
-#gghistogram(LLG_year, x = "Cond", y = "..density..", 
-            #fill = "steelblue",bins = 30, add_density = TRUE)
-# distribution is not symmetrical, so will try sign test
-
-
-# Sign Test
-LLG_year %>%
-  group_by(Year) %>%
-  get_summary_stats(Cond, type = "median_iqr")
-# 2009 n=9, median=71, iqr=91
-# 2010 n=31, median=70, iqr=102
-# 2011 n=32, median=69, iqr=75.8
-# 2012 n=36, median=62, iqr=135
-# 2013 n=28, median=62.5, iqr=132
-# 2014 n=18, median=68.5, iqr=109
-# 2015 n=21, median=79, iqr=141
-# 2016 n=15, median=81, iqr=140
-# 2017 n=30, median=73, iqr=108
-# 2018 n=34, median=70.6, iqr=108
-# 2019 n=17, median=58.8, iqr=173
-# 2020 n=4, median=142, iqr=169
-
-
-
-# statistical tests
-# conductivity by month
-# Sign Test
-LLG_Sites %>%
-  group_by(Month) %>%
-  get_summary_stats(Cond, type = "median_iqr")
-# Jan n=21, median=79, iqr=174
-# Feb n=9, median=79.3, iqr=233
-# Mar n=22, median=62.5, iqr=192
-# Apr n=21, median=64.4, iqr=176
-# May n=28, median=67.0, iqr=170
-# Jun n=21, median=68, iqr=168
-# Jul n=27, median=70, iqr=64.7
-# Aug n=20, median=68.7, iqr=106
-# Sep n=29, median=74, iqr=70
-# Oct n=24, median-68.5, iqr=100
-# Nov n=32, median=70.5, iqr-101
-# Dec n=21, median=70, iqr=104
-
-
-
-
-# sieve bootstrap version of the t-test
-# no assumption of Normality / independence
-notrend_test(LLG_Sites$Cond)
-# t-value=0.67703, p=0.345
-# phi_1=-0.1953815, phi_2=-0.2744110, phi_3=0.2722356
-# there is no linear trend
-
-
-# road salt application Nov-Apr
-# vs trend in off season
-
+# statistical tests not completed as variables do not have the same length

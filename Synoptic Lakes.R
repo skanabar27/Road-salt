@@ -11,8 +11,7 @@ library(ggpubr)
 library(rstatix)
 library(datarium)
 
-# add condensed dataset with salt and conductivity data
-# sf library is corrupt?
+
 synoptic <- read.csv("Synoptic salt.csv")
 
 
@@ -119,7 +118,6 @@ ggplot() +
 dev.off()
 
 
-
 # plot change in Cl over time
 synoptic_Cl <- synoptic %>%
   select("Name", "Year", "Cl")
@@ -210,7 +208,6 @@ ggplot(synoptic_Cl_mean) +
         axis.text.x = element_text(size = 10),
         axis.text.y = element_text(size = 10))
 dev.off()
-
 
 
 # plot change in Na over time
@@ -305,7 +302,6 @@ ggplot(synoptic_Na_mean) +
 dev.off()
 
 
-
 # combined Cl and Na
 synoptic_Na_Cl <- read.csv("Synoptic NaCl.csv")
 
@@ -315,7 +311,6 @@ synoptic_Na_Cl$Ion <- as.character(synoptic_Na_Cl$Ion)
 
 synoptic_Na_Cl <- synoptic_Na_Cl %>%
   na.omit()
-
 
 # figure combined all
 png("synoptic NaCl all.png", units="mm", width=147, height=100, res=300)
@@ -337,58 +332,15 @@ ggplot(synoptic_Na_Cl, aes(x = Year)) +
 dev.off()  
 
 
-
-Ions <- read.csv("Ions.csv")
-Ions <- group_by(Ion)
-Ions$Year <- as.numeric(Ions$Year)
-
-
-# figure combined mean sd
-#png("synoptic NaCl year sd.png", units="mm", width=147, height=100, res=300)
-ggplot(Ions, aes(x = Year)) +
-  geom_line(aes(y = Mean, color = Ion)) +
-  theme_classic() +
-  labs(x = "\n Year",
-       y = "Mean Ion Concentration (mg/L)\n") +
-  geom_errorbar(mapping = aes(x = Year,
-                              ymin = Mean-SD,ymax = Mean+SD), 
-                alpha=0.4, width = 0.2, colour = "red", "blue") +
-  scale_color_discrete(name = "Ions", labels = c("Cl", "Na")) +
-  theme(plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_text(size = 12),
-        axis.title.y = element_text(size = 12),
-        axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10))
-#dev.off()
-
-
-
 # statistical tests
 # conductivity over time
 # identify outliers
 synoptic_conductivity %>% identify_outliers(Conductivity)
 # Whimsical 1991 is an outlier, but not extreme
 
-#synoptic_conductivity_1980 %>% identify_outliers(Conductivity)
-# Frog Pond 1980, is an outlier, but not extreme
-
-#synoptic_conductivity_1991 %>% identify_outliers(Conductivity)
-
-#synoptic_conductivity_2000 %>% identify_outliers(Conductivity)
-
 # check for Normality
 synoptic_conductivity %>% shapiro_test(Conductivity)
 # statistic = 0.883, p<0.001, cannot assume normality
-
-#synoptic_conductivity_1980 %>% shapiro_test(Conductivity)
-# p<0.001, cannot assume normality
-
-#synoptic_conductivity_1991 %>% shapiro_test(Conductivity)
-# p<0.001, cannot assume normality
-
-#synoptic_conductivity_2000 %>% shapiro_test(Conductivity)
-# p=0.00325, cannot assume normality
-
 
 # median and IQR (for Wilcoxon test)
 synoptic_conductivity %>% get_summary_stats(Conductivity, type = "median_iqr")
@@ -430,25 +382,13 @@ stat.test
 # 1991-2000 df=48, p=2.22xe-4, p.adj=8.88xe-4
 
 
-
 # Cl over time
 synoptic_Cl %>% identify_outliers(Cl)
-# Frenchman 2011 is an extreme outlier
-
-#synoptic_Cl_1980 %>% identify_outliers(Cl)
-# Chocolate and Frog Pond 1980, are outliers, but not extreme
-
-#synoptic_Cl_1991 %>% identify_outliers(Cl)
-
-#synoptic_Cl_2000 %>% identify_outliers(Cl)
-
-#synoptic_Cl_2011 %>% identify_outliers(Cl)
 # Frenchman 2011 is an extreme outlier
 
 # check for Normality
 synoptic_Cl %>% shapiro_test(Cl)
 # statistic=0.859, p<0.001, cannot assume normality
-
 
 # median and IQR (for Wilcoxon test)
 synoptic_Cl %>% get_summary_stats(Cl, type = "median_iqr")
@@ -493,25 +433,13 @@ stat.test1
 # 2000-2011 df=50, p=4.46xe-10, p.adj=2.23xe-9
 
 
-
 # Na over time
 synoptic_Na %>% identify_outliers(Na)
-# Frenchman 2011 is an extreme outlier
-
-#synoptic_Na_1980 %>% identify_outliers(Na)
-# Chocolate and Frog Pond 1980, are outliers, but not extreme
-
-#synoptic_Na_1991 %>% identify_outliers(Na)
-
-#synoptic_Na_2000 %>% identify_outliers(Na)
-
-#synoptic_Na_2011 %>% identify_outliers(Na)
 # Frenchman 2011 is an extreme outlier
 
 # check for Normality
 synoptic_Na %>% shapiro_test(Na)
 # statistic=0.751, p<0.001, cannot assume normality
-
 
 # median and IQR (for Wilcoxon test)
 synoptic_Na %>% get_summary_stats(Na, type = "median_iqr")
@@ -528,7 +456,6 @@ dev.off()
 gghistogram(synoptic_Na, x = "Na", y = "..density..", 
             fill = "steelblue",bins = 30, add_density = TRUE)
 # distribution is not symmetrical, so will try sign test
-
 
 # Sign Test
 synoptic_Na %>%
@@ -555,9 +482,4 @@ stat.test2
 # 1991-2000 df=48, p=0.029, p.adj=0.029
 # 1991-2011 df=48, p=1.51xe-9, p.adj=6.04xe-9
 # 2000-2011 df=51, p=6.87xe-7, p.adj=1.37xe-6
-
-
-
-
-
 
