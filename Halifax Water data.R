@@ -18,37 +18,27 @@ library(colortools)
                                                 
 LLG_Sites <- read.csv("LLG_Sites.csv")
 
-
-# conductivity by year
-LLG_cond_year <- LLG_Sites %>%
-  dplyr::group_by(Year) %>%
-  dplyr::summarise(Mean_Conductivity = mean(Cond), SD_Conductivity = sd(Cond)) %>%
-  dplyr::filter(Year == 2009:2019)
+png("hw cond.png", units="mm", width=147, height=100, res=300)
+ggplot(LLG_Sites) +
+  geom_point(aes(x = Year, y = Cond), alpha = 0.4) +
+  theme_classic() +
+  labs(x = "\n Year",
+       y = "Conductivity (µS/cm)\n") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10)) +
+  scale_x_continuous(breaks = seq(2010, 2018, by = 4)) +
+  stat_summary(aes(x = Year, y = Cond), fun = "mean", geom = "line")
+dev.off()
 
 # count per year
 LLG_cond_year_count <- LLG_Sites %>%
   dplyr::group_by(Year) %>%
   dplyr::summarise(count = length(Cond))
 # 2009:9, 2010:31, 2011:32, 2012:36, 2013:28, 2014:18, 2015:21, 2016:15, 2017:30, 2018:34, 2019:17, 2020:4
-
-# with sd
-png("hw cond year sd.png", units="mm", width=147, height=100, res=300)
-ggplot(LLG_cond_year) +
-  geom_line(aes(x = Year, y = Mean_Conductivity)) +
-  theme_classic() +
-  labs(x = "\n Year",
-       y = "Mean Conductivity (µS/cm)\n") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  geom_errorbar(mapping = aes(x = Year,
-                              ymin = Mean_Conductivity-SD_Conductivity,
-                              ymax = Mean_Conductivity+SD_Conductivity), width = 0.2) +
-  theme(plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_text(size = 12),
-        axis.title.y = element_text(size = 12),
-        axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10)) +
-  scale_x_continuous(breaks = seq(2010, 2018, by = 4))
-dev.off()
 
 
 # conductivity by month
